@@ -3,7 +3,9 @@ import {
   Outlet,
   useLoaderData,
   useLocation,
-} from 'react-router-dom'
+} from "react-router-dom"
+
+import app from '@firebaseApp/init'
 
 function Root() {
   const loaderData = useLoaderData()
@@ -15,9 +17,12 @@ function Root() {
     )
   }
 
+  console.log(app)
+
+
   return (
     <main>
-      <h1>
+      <h1 className="text-xl">
         Main Page
       </h1>
       {

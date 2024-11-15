@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <Login />
       },
     ],
-    loader: async () => {
+    loader: () => {
       return localStorage.userId ?? null
     },
   },

@@ -4,6 +4,10 @@ import Root from "@/Root"
 import Home from "@pages/home"
 import Login from "@pages/login"
 
+const userIdLoader = () => {
+  return localStorage.userId ?? null
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -13,14 +17,13 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />
       },
-      {
-        path: "login",
-        element: <Login />
-      },
     ],
-    loader: () => {
-      return localStorage.userId ?? null
-    },
+    loader: userIdLoader
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    loader: userIdLoader
   },
 ])
 

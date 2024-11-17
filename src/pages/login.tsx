@@ -1,9 +1,12 @@
+import { FormEvent, useRef } from "react"
 import {
   Navigate,
   useLoaderData,
 } from "react-router-dom"
 
 import { Icon } from "@iconify/react"
+
+import Input from "@components/ui/Input"
 
 function Login() {
   const loaderData = useLoaderData()
@@ -12,6 +15,10 @@ function Login() {
     return (
       <Navigate to="/" />
     )
+  }
+
+  const handleLoginSubmit = (event: FormEvent) => {
+    event.preventDefault()
   }
 
   return (
@@ -26,6 +33,18 @@ function Login() {
           <Icon
             icon="logos:instagram"
             className="text-5xl brightness-0 invert" />
+
+          <form
+            className="flex flex-col py-12"
+            onSubmit={handleLoginSubmit}>
+            <Input
+              placeholder="Email address"
+              name="email" />
+            <Input
+              placeholder="Password"
+              type="password"
+              name="password" />
+          </form>
         </section>
       </article>
     </main>

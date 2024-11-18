@@ -13,7 +13,10 @@ export default {
         },
         secondary: "#121212",
         link: "#e0f1ff",
-        separator: "#363636",
+        separator: {
+          light: "#555555",
+          dark: "#363636",
+        },
       },
     },
   },

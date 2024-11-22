@@ -6,3 +6,4 @@
 - [Tailwind CSS](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Iconify](https://iconify.design/)
+- [React Hook Form](https://react-hook-form.com/)

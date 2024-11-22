@@ -1,13 +1,20 @@
-import { FormEvent } from "react"
 import {
   Link,
   Navigate,
   useLoaderData,
 } from "react-router-dom"
 
-import { Icon } from "@iconify/react"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import Input from "@components/ui/Input"
+
+import { Icon } from "@iconify/react"
+import clsx from "clsx"
+
+interface LoginFormData {
+  email: string
+  password: string
+}
 
 function Login() {
   const loaderData = useLoaderData()
@@ -18,8 +25,19 @@ function Login() {
     )
   }
 
-  const handleLoginSubmit = (event: FormEvent) => {
-    event.preventDefault()
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isValid },
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
+
+  const handleLoginSubmit: SubmitHandler<LoginFormData> = (data) => {
+    console.log(data)
   }
 
   return (
@@ -38,15 +56,42 @@ function Login() {
 
             <form
               className="flex flex-col gap-y-2 w-72 lg:w-full pt-7 lg:px-3"
-              onSubmit={handleLoginSubmit}>
-              <Input
-                placeholder="Email address"
-                name="email" />
-              <Input
-                placeholder="Password"
-                type="password"
-                name="password" />
-              <button className="h-8 mt-2 bg-primary-button rounded-lg">
+              onSubmit={handleSubmit(handleLoginSubmit)}>
+
+              <Controller
+                name="email"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    placeholder="Email address"
+                    errors={errors.email} />
+                )} />
+
+              <Controller
+                name="password"
+                control={control}
+                rules={{
+                  required: true,
+                  minLength: {
+                    value: 6,
+                    message: "",
+                  }
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    placeholder="Password"
+                    type="password"
+                    errors={errors.password} />
+                )} />
+              <button
+                disabled={!isValid}
+                className={clsx(
+                  "h-8 mt-2 bg-primary-button rounded-lg",
+                  !isValid && "opacity-70 cursor-not-allowed",
+                )}>
                 Log in
               </button>
             </form>

@@ -5,9 +5,14 @@ import {
   Ref,
   ChangeEvent,
 } from "react"
+import { FieldError } from "react-hook-form"
 import clsx from "clsx"
 
-function Input({ type, placeholder, onChange, ...inputProps }: ComponentProps<"input">, ref: Ref<HTMLInputElement>) {
+interface InputProps extends ComponentProps<"input"> {
+  errors?: FieldError
+}
+
+function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProps, ref: Ref<HTMLInputElement>) {
   const [currentType, setCurrentType] = useState(type)
   const togglePasswordVisibility = () => {
     setCurrentType(previousType => previousType === "password" ? "text" : "password")
@@ -43,6 +48,12 @@ function Input({ type, placeholder, onChange, ...inputProps }: ComponentProps<"i
             (value && placeholder) ? "grow-0" : "flex-1",
           )}
           onChange={handleChange} />
+
+        {errors && (
+          <small>
+            {errors.message}
+          </small>
+        )}
       </div>
 
       {(value && type === "password") && (

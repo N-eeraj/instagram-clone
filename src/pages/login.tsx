@@ -1,5 +1,6 @@
-import { FormEvent, useRef } from "react"
+import { FormEvent } from "react"
 import {
+  Link,
   Navigate,
   useLoaderData,
 } from "react-router-dom"
@@ -29,22 +30,38 @@ function Login() {
           alt="instagram-screens"
           className="max-lg:hidden h-[80vh]" />
 
-        <section className="flex flex-col items-center w-full">
-          <Icon
-            icon="logos:instagram"
-            className="text-5xl brightness-0 invert" />
+        <section className="flex flex-col justify-between items-center w-full max-w-72 mx-auto">
+          <div>
+            <Icon
+              icon="logos:instagram"
+              className="mx-auto text-5xl brightness-0 invert" />
 
-          <form
-            className="flex flex-col py-12"
-            onSubmit={handleLoginSubmit}>
-            <Input
-              placeholder="Email address"
-              name="email" />
-            <Input
-              placeholder="Password"
-              type="password"
-              name="password" />
-          </form>
+            <form
+              className="flex flex-col gap-y-2 w-72 pt-7"
+              onSubmit={handleLoginSubmit}>
+              <Input
+                placeholder="Email address"
+                name="email" />
+              <Input
+                placeholder="Password"
+                type="password"
+                name="password" />
+              <button className="h-8 mt-2 bg-primary-button rounded-lg">
+                Log in
+              </button>
+            </form>
+          </div>
+
+          <div className="pb-2.5 text-sm">
+            <span className="mr-1">
+              Don't have an account?
+            </span>
+            <Link
+              to="/sign-up"
+              className="text-primary-button font-semibold">
+              Sign up
+            </Link>
+          </div>
         </section>
       </article>
     </main>

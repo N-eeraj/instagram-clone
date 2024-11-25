@@ -60,7 +60,7 @@ function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProp
         <button
           type="button"
           aria-label={currentType === "password" ? "Show password" : "Hide password"}
-          className="mr-2 px-1 text-sm"
+          className="mr-2 px-1 text-sm hover:opacity-50"
           onClick={togglePasswordVisibility}>
           {currentType === "password" ? "Show" : "Hide"}
         </button>

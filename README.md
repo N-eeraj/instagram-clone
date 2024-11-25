@@ -5,5 +5,6 @@
 - [React Router](https://reactrouter.com/en/main)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Iconify](https://iconify.design/)
 - [React Hook Form](https://react-hook-form.com/)
+- [Iconify](https://iconify.design/)
+- [Storybook](https://storybook.js.org/)

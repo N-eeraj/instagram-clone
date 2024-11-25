@@ -7,9 +7,9 @@ import {
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 import Input from "@components/ui/Input"
+import Button from "@components/ui/Button"
 
 import { Icon } from "@iconify/react"
-import clsx from "clsx"
 
 interface LoginFormData {
   email: string
@@ -86,14 +86,9 @@ function Login() {
                     type="password"
                     errors={errors.password} />
                 )} />
-              <button
-                disabled={!isValid}
-                className={clsx(
-                  "h-8 mt-2 bg-primary-button rounded-lg",
-                  !isValid && "opacity-70 cursor-not-allowed",
-                )}>
-                Log in
-              </button>
+                <Button disabled={!isValid}>
+                  Login
+                </Button>
             </form>
           </div>
 

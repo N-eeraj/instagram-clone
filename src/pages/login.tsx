@@ -4,17 +4,21 @@ import {
   useLoaderData,
 } from "react-router-dom"
 
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import {
+  Controller,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form"
 
 import Input from "@components/ui/Input"
 import Button from "@components/ui/Button"
 
 import { Icon } from "@iconify/react"
 
-interface LoginFormData {
-  email: string
-  password: string
-}
+import { LoginFormData } from "@customTypes/auth"
+
+import { handleSignIn } from "@firebaseApp/auth"
+
 
 function Login() {
   const loaderData = useLoaderData()
@@ -29,6 +33,7 @@ function Login() {
     handleSubmit,
     control,
     formState: { errors, isValid },
+    setError,
   } = useForm<LoginFormData>({
     defaultValues: {
       email: "",
@@ -36,8 +41,13 @@ function Login() {
     },
   })
 
-  const handleLoginSubmit: SubmitHandler<LoginFormData> = (data) => {
-    console.log(data)
+  const handleLoginSubmit: SubmitHandler<LoginFormData> = async (data) => {
+    try {
+      const user = await handleSignIn(data)
+      console.log(user)
+    } catch(error) {
+      setError("root", { message: error as string });
+    }
   }
 
   return (
@@ -89,6 +99,9 @@ function Login() {
                 <Button disabled={!isValid}>
                   Login
                 </Button>
+                <small>
+                  {JSON.stringify(errors.root)}
+                </small>
             </form>
           </div>
 

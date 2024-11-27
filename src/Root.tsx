@@ -4,6 +4,8 @@ import {
   useLoaderData,
 } from "react-router-dom"
 
+import "@firebaseApp/init"
+
 function Root() {
   const loaderData = useLoaderData()
 

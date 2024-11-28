@@ -5,7 +5,8 @@ import {
   Ref,
   ChangeEvent,
 } from "react"
-import { FieldError } from "react-hook-form"
+import Error from "@components/ui/Error"
+import { type FieldError } from "react-hook-form"
 import clsx from "clsx"
 
 interface InputProps extends ComponentProps<"input"> {
@@ -49,11 +50,7 @@ function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProp
           )}
           onChange={handleChange} />
 
-        {errors && (
-          <small>
-            {errors.message}
-          </small>
-        )}
+        <Error errors={errors} />
       </div>
 
       {(value && type === "password") && (

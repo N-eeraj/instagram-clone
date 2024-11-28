@@ -10,14 +10,16 @@ import {
   useForm,
 } from "react-hook-form"
 
+import { handleSignIn } from "@firebaseApp/auth"
+
+import Error from "@components/ui/Error"
+
 import Input from "@components/ui/Input"
 import Button from "@components/ui/Button"
 
 import { Icon } from "@iconify/react"
 
 import { LoginFormData } from "@customTypes/auth"
-
-import { handleSignIn } from "@firebaseApp/auth"
 
 
 function Login() {
@@ -32,7 +34,7 @@ function Login() {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     setError,
   } = useForm<LoginFormData>({
     defaultValues: {
@@ -46,7 +48,7 @@ function Login() {
       const user = await handleSignIn(data)
       console.log(user)
     } catch(error) {
-      setError("root", { message: error as string });
+      setError("root", { message: error as string })
     }
   }
 
@@ -96,12 +98,13 @@ function Login() {
                     type="password"
                     errors={errors.password} />
                 )} />
-                <Button disabled={!isValid}>
+                <Button
+                  disabled={!isValid}
+                  loading={isSubmitting}>
                   Login
                 </Button>
-                <small>
-                  {JSON.stringify(errors.root)}
-                </small>
+
+                <Error errors={errors.root} />
             </form>
           </div>
 

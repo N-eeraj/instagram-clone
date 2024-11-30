@@ -3,21 +3,33 @@ import {
   ComponentProps,
   Ref,
 } from "react"
+import { Icon } from "@iconify/react"
 import clsx from "clsx"
 
-function Button({ disabled, className, children, ...buttonProps }: ComponentProps<"button">, ref: Ref<HTMLButtonElement>) {
+interface ButtonProps extends ComponentProps<"button"> {
+  loading?: boolean
+}
+
+function Button({ loading, disabled, className, children, ...buttonProps }: ButtonProps, ref: Ref<HTMLButtonElement>) {
   return (
     <button
       {...buttonProps}
       ref={ref}
-      disabled={disabled}
+      disabled={disabled || loading}
       className={clsx(
-        "h-8 mt-2 px-2 bg-primary-button text-primary-text rounded-lg",
-        disabled && "opacity-70",
-        !disabled && "hover:bg-primary-button-hovered",
+        "min-w-24 h-8 mt-2 px-2 bg-primary-button text-primary-text rounded-lg",
+        (disabled || loading) && "opacity-70 cursor-not-allowed",
+        !(disabled && loading) && "hover:bg-primary-button-hovered",
         className,
       )}>
-      {children}
+
+      {loading ? (
+        <Icon
+          icon="line-md:loading-twotone-loop"
+          className="mx-auto size-full p-1" />
+        ) :
+        children
+      }
     </button>
   )
 }

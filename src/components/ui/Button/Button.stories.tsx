@@ -6,7 +6,7 @@ const meta: Meta<typeof Button> = {
   title: "Button",
   component: Button,
   args: {
-    children: "Hello World"
+    children: "Primary Button"
   }
 }
 
@@ -20,6 +20,13 @@ export const Primary: Story = {
 
 export const Disabled: Story = {
   args: {
+    children: "Disabled Button",
     disabled: true,
+  },
+}
+
+export const Loading: Story = {
+  args: {
+    loading: true,
   },
 }

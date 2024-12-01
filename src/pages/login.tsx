@@ -1,7 +1,9 @@
+import { useContext } from "react"
 import {
   Link,
   Navigate,
   useLoaderData,
+  useNavigate,
 } from "react-router-dom"
 
 import {
@@ -10,15 +12,13 @@ import {
   useForm,
 } from "react-hook-form"
 
-import { handleSignIn } from "@firebaseApp/auth"
-
-import Error from "@components/ui/Error"
-
 import Input from "@components/ui/Input"
 import Button from "@components/ui/Button"
+import Error from "@components/ui/Error"
+import { UserContext } from "@contexts/User"
 
+import { handleSignIn } from "@firebaseApp/auth"
 import { Icon } from "@iconify/react"
-
 import { LoginFormData } from "@customTypes/auth"
 
 
@@ -43,10 +43,15 @@ function Login() {
     },
   })
 
+  const navigate = useNavigate()
+
+  const { signInUser } = useContext(UserContext)
+
   const handleLoginSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       const user = await handleSignIn(data)
-      console.log(user)
+      signInUser(user)
+      navigate("/")
     } catch(error) {
       setError("root", { message: error as string })
     }

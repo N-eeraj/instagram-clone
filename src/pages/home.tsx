@@ -1,7 +1,13 @@
-function home() {
+import { useContext } from "react"
+import { UserContext } from "@/contexts/User"
+
+function Home() {
+  const { user } = useContext(UserContext)
+  console.log(user)
+
   return (
-    <div>home</div>
+    <div>Home</div>
   )
 }
 
-export default home
+export default Home

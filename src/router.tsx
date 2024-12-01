@@ -5,7 +5,7 @@ import Home from "@pages/home"
 import Login from "@pages/login"
 
 const userIdLoader = () => {
-  return localStorage.userId ?? null
+  return localStorage.user ?? null
 }
 
 const router = createBrowserRouter([

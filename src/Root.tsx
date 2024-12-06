@@ -2,7 +2,7 @@ import {
   Navigate,
   Outlet,
   useLoaderData,
-} from "react-router-dom"
+} from "react-router"
 
 import "@firebaseApp/init"
 

@@ -4,7 +4,7 @@ import {
   Navigate,
   useLoaderData,
   useNavigate,
-} from "react-router-dom"
+} from "react-router"
 
 import {
   Controller,

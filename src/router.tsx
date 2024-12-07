@@ -1,8 +1,11 @@
 import { createBrowserRouter } from "react-router"
 
 import Root from "@/Root"
+import AuthRoot from "@/Root/Auth"
+
 import Home from "@pages/home"
 import Login from "@pages/login"
+import Register from "@pages/register"
 import PageNotFound from "@pages/not-found"
 
 const userIdLoader = () => {
@@ -22,9 +25,19 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element: <Login />,
-    loader: userIdLoader
+    path: "/",
+    element: <AuthRoot />,
+    loader: userIdLoader,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+    ],
   },
   {
     path: "*",

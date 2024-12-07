@@ -1,8 +1,6 @@
 import { useContext } from "react"
 import {
   Link,
-  Navigate,
-  useLoaderData,
   useNavigate,
 } from "react-router"
 
@@ -23,14 +21,6 @@ import { LoginFormData } from "@customTypes/auth"
 
 
 function Login() {
-  const loaderData = useLoaderData()
-
-  if (loaderData) {
-    return (
-      <Navigate to="/" />
-    )
-  }
-
   const {
     handleSubmit,
     control,

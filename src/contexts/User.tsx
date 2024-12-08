@@ -42,9 +42,9 @@ function UserContextProvider({ children }: ChildrenProps) {
   }
 
   return (
-    <UserContext.Provider value={contextValues}>
+    <UserContext value={contextValues}>
       {children}
-    </UserContext.Provider>
+    </UserContext>
   )
 }
 

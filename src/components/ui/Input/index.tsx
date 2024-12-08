@@ -1,8 +1,6 @@
 import {
   useState,
-  forwardRef,
   ComponentProps,
-  Ref,
   ChangeEvent,
 } from "react"
 import Error from "@components/ui/Error"
@@ -13,7 +11,7 @@ interface InputProps extends ComponentProps<"input"> {
   errors?: FieldError
 }
 
-function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProps, ref: Ref<HTMLInputElement>) {
+function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProps) {
   const [currentType, setCurrentType] = useState(type)
   const togglePasswordVisibility = () => {
     setCurrentType(previousType => previousType === "password" ? "text" : "password")
@@ -42,7 +40,6 @@ function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProp
 
         <input
           {...inputProps}
-          ref={ref}
           type={currentType}
           className={clsx(
             "bg-transparent text-xs outline-none truncate z-10",
@@ -66,4 +63,4 @@ function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProp
   )
 }
 
-export default forwardRef(Input)
+export default Input

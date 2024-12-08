@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { use } from "react"
 import {
   Link,
   useNavigate,
@@ -35,7 +35,7 @@ function Login() {
 
   const navigate = useNavigate()
 
-  const { signInUser } = useContext(UserContext)
+  const { signInUser } = use(UserContext)
 
   const handleLoginSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {

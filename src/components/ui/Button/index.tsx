@@ -1,7 +1,5 @@
 import {
-  forwardRef,
   ComponentProps,
-  Ref,
 } from "react"
 import { Icon } from "@iconify/react"
 import clsx from "clsx"
@@ -10,11 +8,10 @@ interface ButtonProps extends ComponentProps<"button"> {
   loading?: boolean
 }
 
-function Button({ loading, disabled, className, children, ...buttonProps }: ButtonProps, ref: Ref<HTMLButtonElement>) {
+function Button({ loading, disabled, className, children, ...buttonProps }: ButtonProps) {
   return (
     <button
       {...buttonProps}
-      ref={ref}
       disabled={disabled || loading}
       className={clsx(
         "min-w-24 h-8 mt-2 px-2 bg-primary-button text-primary-text rounded-lg",
@@ -34,4 +31,4 @@ function Button({ loading, disabled, className, children, ...buttonProps }: Butt
   )
 }
 
-export default forwardRef(Button)
+export default Button

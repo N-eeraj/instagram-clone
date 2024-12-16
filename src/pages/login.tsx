@@ -93,6 +93,7 @@ function Login() {
                     type="password"
                     errors={errors.password} />
                 )} />
+
                 <Button
                   disabled={!isValid}
                   loading={isSubmitting}>
@@ -103,12 +104,12 @@ function Login() {
             </form>
           </div>
 
-          <div className="lg:flex lg:justify-center lg:items-center lg:w-full lg:h-16 text-sm lg:border lg:border-separator-light">
+          <div className="lg:flex lg:justify-center lg:items-center lg:w-full lg:h-16 text-sm lg:border lg:border-separator-dark">
             <span className="mr-1">
               Don't have an account?
             </span>
             <Link
-              to="/sign-up"
+              to="/register"
               className="text-primary-button font-semibold">
               Sign up
             </Link>

@@ -6,7 +6,6 @@ import {
 import { ChildrenProps } from "@customTypes/common"
 import type { User } from "firebase/auth"
 
-
 interface UserContext {
   user: User | null
   signInUser: Function
@@ -37,6 +36,7 @@ function UserContextProvider({ children }: ChildrenProps) {
 
   const contextValues = {
     user,
+    setUser,
     signInUser,
     signOutUser,
   }

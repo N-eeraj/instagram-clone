@@ -1,3 +1,5 @@
+import { use } from "react"
+
 import {
   Link,
   useNavigate,
@@ -14,6 +16,7 @@ import Input from "@components/ui/Input"
 import Button from "@components/ui/Button"
 import Error from "@components/ui/Error"
 
+import { UserContext } from "@contexts/User"
 import { Icon } from "@iconify/react"
 
 import { handleSignUp } from "@firebaseApp/auth"
@@ -37,12 +40,21 @@ function Register() {
     resolver: zodResolver(registerFormSchema)
   })
 
+  const { signInUser } = use(UserContext)
   const navigate = useNavigate()
 
   const handleRegisterSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
       const user = await handleSignUp(data)
-      // navigate("/")
+      const { password, ...userData } = data
+      signInUser({
+        ...userData,
+        followers: 0,
+        following: 0,
+        posts: 0,
+        ...user,
+      })
+      navigate("/")
     } catch(error) {
       if (error instanceof Object && "path" in error && "message" in error) {
         setError(error.path as keyof RegisterFormData, { message: error.message as string })

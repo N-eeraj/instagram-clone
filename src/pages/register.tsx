@@ -8,13 +8,15 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import Input from "@components/ui/Input"
 import Button from "@components/ui/Button"
-import Error from "@components/ui/Error"
 
 import { Icon } from "@iconify/react"
-import { RegisterFormData } from "@customTypes/auth"
+
+import { registerFormSchema } from "@schemas/auth"
+import type { RegisterFormData } from "@customTypes/auth"
 
 function Register() {
   const {
@@ -23,12 +25,14 @@ function Register() {
     formState: { errors, isValid, isSubmitting },
     setError,
   } = useForm<RegisterFormData>({
+    mode: "onTouched",
     defaultValues: {
       email: "",
       password: "",
       fullName: "",
       userName: "",
     },
+    resolver: zodResolver(registerFormSchema)
   })
 
   const navigate = useNavigate()
@@ -63,7 +67,6 @@ function Register() {
               <Controller
                 name="email"
                 control={control}
-                rules={{ required: true }}
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -74,13 +77,6 @@ function Register() {
               <Controller
                 name="password"
                 control={control}
-                rules={{
-                  required: true,
-                  minLength: {
-                    value: 6,
-                    message: "",
-                  }
-                }}
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -92,23 +88,21 @@ function Register() {
                 <Controller
                   name="fullName"
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <Input
                       {...field}
                       placeholder="Full Name"
-                      errors={errors.email} />
+                      errors={errors.fullName} />
                   )} />
   
                 <Controller
                   name="userName"
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <Input
                       {...field}
                       placeholder="Username"
-                      errors={errors.email} />
+                      errors={errors.userName} />
                   )} />
 
                 <Button
@@ -116,8 +110,6 @@ function Register() {
                   loading={isSubmitting}>
                   Sign Up
                 </Button>
-
-                <Error errors={errors.root} />
             </form>
           </div>
 

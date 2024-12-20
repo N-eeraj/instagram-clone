@@ -27,6 +27,7 @@
       "@components/*": ["./src/components/*"],
       "@contexts/*": ["./src/contexts/*"],
       "@firebaseApp/*": ["./src/libs/firebase/*"],
+      "@schemas/*": ["./src/schemas/*"],
       "@customTypes/*": ["./src/types/*"],
     }
   },

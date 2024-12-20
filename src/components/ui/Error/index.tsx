@@ -10,7 +10,7 @@ interface ErrorType {
 function Error({ errors }: ErrorType) {
   if (errors) {
     return (
-      <small className="text-red-400">
+      <small className="inline-block mt-1 text-red-500 text-xs">
         {errors.message}
       </small>
     )

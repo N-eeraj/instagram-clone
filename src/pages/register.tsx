@@ -12,9 +12,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import Input from "@components/ui/Input"
 import Button from "@components/ui/Button"
+import Error from "@components/ui/Error"
 
 import { Icon } from "@iconify/react"
 
+import { handleSignUp } from "@firebaseApp/auth"
 import { registerFormSchema } from "@schemas/auth"
 import type { RegisterFormData } from "@customTypes/auth"
 
@@ -39,10 +41,14 @@ function Register() {
 
   const handleRegisterSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
-      console.log(data)
+      const user = await handleSignUp(data)
       // navigate("/")
     } catch(error) {
-      setError("root", { message: error as string })
+      if (error instanceof Object && "path" in error && "message" in error) {
+        setError(error.path as keyof RegisterFormData, { message: error.message as string })
+      } else {
+        setError("root", { message: error as string })
+      }
     }
   }
 
@@ -108,6 +114,8 @@ function Register() {
                       errors={errors.userName}
                       showValidityIcon />
                   )} />
+
+                {errors.root && <Error errors={errors.root} />}
 
                 <Button
                   disabled={!isValid}

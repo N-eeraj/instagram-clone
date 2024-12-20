@@ -4,14 +4,22 @@ import {
   ChangeEvent,
 } from "react"
 import Error from "@components/ui/Error"
+
+import { Icon } from "@iconify/react"
 import { type FieldError } from "react-hook-form"
 import clsx from "clsx"
 
 interface InputProps extends ComponentProps<"input"> {
   errors?: FieldError
+  showValidityIcon?: boolean
 }
 
-function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProps) {
+interface ValidityIcon {
+  hasValue: boolean
+  hasErrors: boolean
+}
+
+function Input({ type, placeholder, errors, showValidityIcon = false, onChange, ...inputProps }: InputProps) {
   const [currentType, setCurrentType] = useState(type)
   const togglePasswordVisibility = () => {
     setCurrentType(previousType => previousType === "password" ? "text" : "password")
@@ -26,7 +34,7 @@ function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProp
   return (
     <div>
       <div className={clsx(
-        "relative flex items-center w-full h-9 bg-secondary outline rounded-sm",
+        "relative flex items-center w-full h-9 pr-2 bg-secondary outline rounded-sm",
         errors ? "outline-red-500" : "outline-separator-light",
       )}>
         <div className={clsx(
@@ -52,19 +60,39 @@ function Input({ type, placeholder, errors, onChange, ...inputProps }: InputProp
             onChange={handleChange} />
         </div>
 
+        {showValidityIcon && (
+          <ValidityIcon
+            hasValue={!!value}
+            hasErrors={!!errors} />
+        )}
+
         {(value && type === "password") && (
           <button
             type="button"
             aria-label={currentType === "password" ? "Show password" : "Hide password"}
-            className="mr-2 px-1 text-sm hover:opacity-50"
+            className="px-1 text-sm hover:opacity-50"
             onClick={togglePasswordVisibility}>
             {currentType === "password" ? "Show" : "Hide"}
           </button>
         )}
       </div>
+
       <Error errors={errors} />
     </div>
   )
+}
+
+function ValidityIcon({ hasValue, hasErrors }: ValidityIcon) {
+  if (hasValue || hasErrors) {
+    return (
+      <Icon
+        icon={hasErrors ? "radix-icons:cross-circled" : "radix-icons:check-circled"}
+        fontSize={24}
+        className={clsx(
+          hasErrors && "text-red-500"
+        )} />
+    )
+  }
 }
 
 export default Input

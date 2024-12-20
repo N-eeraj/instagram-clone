@@ -71,7 +71,8 @@ function Register() {
                   <Input
                     {...field}
                     placeholder="Email address"
-                    errors={errors.email} />
+                    errors={errors.email}
+                    showValidityIcon />
                 )} />
 
               <Controller
@@ -82,7 +83,8 @@ function Register() {
                     {...field}
                     placeholder="Password"
                     type="password"
-                    errors={errors.password} />
+                    errors={errors.password}
+                    showValidityIcon />
                 )} />
 
                 <Controller
@@ -92,7 +94,8 @@ function Register() {
                     <Input
                       {...field}
                       placeholder="Full Name"
-                      errors={errors.fullName} />
+                      errors={errors.fullName}
+                      showValidityIcon />
                   )} />
   
                 <Controller
@@ -102,7 +105,8 @@ function Register() {
                     <Input
                       {...field}
                       placeholder="Username"
-                      errors={errors.userName} />
+                      errors={errors.userName}
+                      showValidityIcon />
                   )} />
 
                 <Button

@@ -1,4 +1,3 @@
-import { use } from "react"
 import {
   Link,
   useNavigate,
@@ -13,7 +12,6 @@ import {
 import Input from "@components/ui/Input"
 import Button from "@components/ui/Button"
 import Error from "@components/ui/Error"
-import { UserContext } from "@contexts/User"
 
 import { handleSignIn } from "@firebaseApp/auth"
 import { Icon } from "@iconify/react"
@@ -35,13 +33,10 @@ function Login() {
 
   const navigate = useNavigate()
 
-  const { signInUser } = use(UserContext)
-
   const handleLoginSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
-      const user = await handleSignIn(data)
-      signInUser(user)
-      navigate("/")
+      await handleSignIn(data)
+      // navigate("/")
     } catch(error) {
       setError("root", { message: error as string })
     }

@@ -1,33 +1,28 @@
 import { createBrowserRouter } from "react-router"
 
-import Root from "@/Root"
-import AuthRoot from "@/Root/Auth"
+import AuthLayout from "@layout/Auth"
+import GuestLayout from "@layout/Guest"
+import PublicLayout from "@layout/Public"
 
 import Home from "@pages/home"
 import Login from "@pages/login"
 import Register from "@pages/register"
 import PageNotFound from "@pages/not-found"
 
-const uidLoader = () => {
-  return localStorage.user ?? null
-}
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
-    loader: uidLoader,
+    element: <AuthLayout />,
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
       },
     ],
   },
   {
     path: "/",
-    element: <AuthRoot />,
-    loader: uidLoader,
+    element: <GuestLayout />,
     children: [
       {
         path: "/login",
@@ -40,8 +35,18 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "*",
-    element: <PageNotFound />,
+    path: "/",
+    element: <PublicLayout />,
+    children: [
+      {
+        path: ":userName",
+        element: <>element</>,
+      },
+      {
+        path: "*",
+        element: <PageNotFound />,
+      },
+    ],
   },
 ])
 

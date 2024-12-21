@@ -4,43 +4,37 @@ import {
   useState,
   type PropsWithChildren,
 } from "react"
-import type { User } from "firebase/auth"
-import type { UserDetails } from "@customTypes/user"
 
-type UserContextType = User & UserDetails
+import { auth } from "@firebaseApp/auth"
+import type { User } from "firebase/auth"
 
 interface UserContext {
-  user: UserContextType | null
-  signInUser: Function
-  signOutUser: Function
+  authUser: User | null
+  setAuthUser: Function
 }
 
 export const UserContext = createContext<UserContext>({
-  user: null,
-  signInUser: (_args: User) => {},
-  signOutUser: () => {},
+  authUser: null,
+  setAuthUser: (_args: User | null) => {},
 })
 
 function UserContextProvider({ children }: PropsWithChildren) {
-  const [user, setUser] = useState<UserContextType | null>(null)
+  const [authUser, setAuthUser] = useState<User | null>(JSON.parse(localStorage.getItem("authUser") ?? "null"))
 
-  const signInUser = (userDetails: UserContextType) => {
-    localStorage.setItem("user", JSON.stringify(userDetails))
-    setUser(userDetails)
-  }
-  const signOutUser = () => {
-    localStorage.removeItem("user")
-    setUser(null)
+  const handleAuthState = () => {
+    auth.onAuthStateChanged((authUser) => {
+      setAuthUser(authUser)
+      localStorage.setItem("authUser", JSON.stringify(authUser))
+    })
   }
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user") ?? "null"))
+    handleAuthState()
   }, [])
 
   const contextValues = {
-    user,
-    signInUser,
-    signOutUser,
+    authUser,
+    setAuthUser,
   }
 
   return (

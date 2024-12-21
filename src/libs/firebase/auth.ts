@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth"
+
 import {
   isUsernameTaken,
   addUserData,
@@ -13,7 +14,7 @@ import {
   RegisterFormData,
 } from "@customTypes/auth"
 
-const auth = getAuth()
+export const auth = getAuth()
 
 export async function handleSignIn({ email, password }: LoginFormData) {
   try {

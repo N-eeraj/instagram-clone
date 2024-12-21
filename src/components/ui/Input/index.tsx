@@ -2,6 +2,7 @@ import {
   useState,
   ComponentProps,
   ChangeEvent,
+  ReactElement,
 } from "react"
 import Error from "@components/ui/Error"
 
@@ -12,6 +13,9 @@ import clsx from "clsx"
 interface InputProps extends ComponentProps<"input"> {
   errors?: FieldError
   showValidityIcon?: boolean
+  filled?: boolean
+  placeholderLabel?: boolean
+  prepend?: ReactElement | string | number
 }
 
 interface ValidityIcon {
@@ -19,7 +23,7 @@ interface ValidityIcon {
   hasErrors: boolean
 }
 
-function Input({ type, placeholder, errors, showValidityIcon = false, className, onChange, ...inputProps }: InputProps) {
+function Input({ type, placeholder, errors, showValidityIcon = false, filled, placeholderLabel, prepend, className, onChange, ...inputProps }: InputProps) {
   const [currentType, setCurrentType] = useState(type)
   const togglePasswordVisibility = () => {
     setCurrentType(previousType => previousType === "password" ? "text" : "password")
@@ -34,14 +38,17 @@ function Input({ type, placeholder, errors, showValidityIcon = false, className,
   return (
     <div className={className}>
       <div className={clsx(
-        "relative flex items-center w-full h-9 pr-2 bg-secondary outline rounded-sm",
+        "relative flex items-center w-full h-9 pr-2 rounded-sm",
+        filled ? "bg-white/5" : "bg-secondary outline",
         errors ? "outline-red-500" : "outline-separator-light",
+        prepend && "pl-2"
       )}>
+        {prepend && prepend}
         <div className={clsx(
           "flex flex-col justify-end flex-1 h-full pl-2",
           (value && placeholder) && "pb-1",
         )}>
-          {placeholder && (
+          {placeholderLabel && placeholder && (
             <small className={clsx(
               "absolute text-primary-text/60 duration-200 origin-top-left",
               value ? "top-0 scale-75" : "top-1/2 -translate-y-1/2",
@@ -51,11 +58,12 @@ function Input({ type, placeholder, errors, showValidityIcon = false, className,
           )}
 
           <input
+            placeholder={placeholderLabel ? "" : placeholder}
             {...inputProps}
             type={currentType}
             className={clsx(
               "bg-transparent text-xs outline-none truncate z-10",
-              (value && placeholder) ? "grow-0" : "flex-1",
+              (value && placeholderLabel && placeholder) ? "grow-0" : "flex-1",
             )}
             onChange={handleChange} />
         </div>

@@ -1,7 +1,4 @@
-import {
-  Link,
-  useNavigate,
-} from "react-router"
+import { Link } from "react-router"
 
 import {
   Controller,
@@ -31,12 +28,9 @@ function Login() {
     },
   })
 
-  const navigate = useNavigate()
-
   const handleLoginSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       await handleSignIn(data)
-      // navigate("/")
     } catch(error) {
       setError("root", { message: error as string })
     }
@@ -68,6 +62,7 @@ function Login() {
                   <Input
                     {...field}
                     placeholder="Email address"
+                    placeholderLabel
                     errors={errors.email} />
                 )} />
 
@@ -84,8 +79,9 @@ function Login() {
                 render={({ field }) => (
                   <Input
                     {...field}
-                    placeholder="Password"
                     type="password"
+                    placeholder="Password"
+                    placeholderLabel
                     errors={errors.password} />
                 )} />
 

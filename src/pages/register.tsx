@@ -1,7 +1,4 @@
-import {
-  Link,
-  useNavigate,
-} from "react-router"
+import { Link } from "react-router"
 
 import {
   Controller,
@@ -37,12 +34,9 @@ function Register() {
     resolver: zodResolver(registerFormSchema)
   })
 
-  const navigate = useNavigate()
-
   const handleRegisterSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
       await handleSignUp(data)
-      // navigate("/")
     } catch(error) {
       if (error instanceof Object && "path" in error && "message" in error) {
         setError(error.path as keyof RegisterFormData, { message: error.message as string })
@@ -77,6 +71,7 @@ function Register() {
                   <Input
                     {...field}
                     placeholder="Email address"
+                    placeholderLabel
                     errors={errors.email}
                     showValidityIcon />
                 )} />
@@ -87,8 +82,9 @@ function Register() {
                 render={({ field }) => (
                   <Input
                     {...field}
-                    placeholder="Password"
                     type="password"
+                    placeholder="Password"
+                    placeholderLabel
                     errors={errors.password}
                     showValidityIcon />
                 )} />
@@ -100,6 +96,7 @@ function Register() {
                     <Input
                       {...field}
                       placeholder="Full Name"
+                      placeholderLabel
                       errors={errors.fullName}
                       showValidityIcon />
                   )} />
@@ -111,6 +108,7 @@ function Register() {
                     <Input
                       {...field}
                       placeholder="Username"
+                      placeholderLabel
                       errors={errors.userName}
                       showValidityIcon />
                   )} />

@@ -23,9 +23,10 @@
     "noUncheckedSideEffectImports": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@layout/*": ["./src/layout/*"],
+      "@layouts/*": ["./src/layouts/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "@contexts/*": ["./src/contexts/*"],
       "@firebaseApp/*": ["./src/libs/firebase/*"],
       "@schemas/*": ["./src/schemas/*"],

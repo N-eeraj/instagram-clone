@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router"
 
-import AuthLayout from "@layout/Auth"
-import GuestLayout from "@layout/Guest"
-import PublicLayout from "@layout/Public"
+import AuthLayout from "@layouts/Auth"
+import GuestLayout from "@layouts/Guest"
+import PublicLayout from "@layouts/Public"
 
 import Home from "@pages/home"
 import Login from "@pages/login"

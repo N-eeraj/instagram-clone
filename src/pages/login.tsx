@@ -1,18 +1,17 @@
 import { Link } from "react-router"
 
 import {
-  Controller,
   SubmitHandler,
   useForm,
 } from "react-hook-form"
 
-import Input from "@components/ui/Input"
+import ControlledInput from "@components/ui/Input/Controlled"
 import Button from "@components/ui/Button"
 import Error from "@components/ui/Error"
 
 import { handleSignIn } from "@firebaseApp/auth"
 import { Icon } from "@iconify/react"
-import { LoginFormData } from "@customTypes/auth"
+import type { LoginFormData } from "@customTypes/auth"
 
 
 function Login() {
@@ -54,19 +53,18 @@ function Login() {
               className="flex flex-col gap-y-2 w-72 lg:w-full pt-7 lg:px-3"
               onSubmit={handleSubmit(handleLoginSubmit)}>
 
-              <Controller
+              <ControlledInput
                 name="email"
                 control={control}
                 rules={{ required: true }}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    placeholder="Email address"
-                    placeholderLabel
-                    errors={errors.email} />
-                )} />
+                inputProps={{
+                  type: "email",
+                  placeholder: "Email address",
+                  placeholderLabel: true,
+                  errors: errors.email
+                }} />
 
-              <Controller
+              <ControlledInput
                 name="password"
                 control={control}
                 rules={{
@@ -76,14 +74,12 @@ function Login() {
                     message: "",
                   }
                 }}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="password"
-                    placeholder="Password"
-                    placeholderLabel
-                    errors={errors.password} />
-                )} />
+                inputProps={{
+                  type: "password",
+                  placeholder: "Password",
+                  placeholderLabel: true,
+                  errors: errors.password,
+                }} />
 
                 <Button
                   disabled={!isValid}

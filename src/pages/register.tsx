@@ -1,13 +1,12 @@
 import { Link } from "react-router"
 
 import {
-  Controller,
   SubmitHandler,
   useForm,
 } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import Input from "@components/ui/Input"
+import ControlledInput from "@components/ui/Input/Controlled"
 import Button from "@components/ui/Button"
 import Error from "@components/ui/Error"
 
@@ -64,54 +63,47 @@ function Register() {
               className="flex flex-col gap-y-2 w-72 lg:w-full lg:px-3 py-4"
               onSubmit={handleSubmit(handleRegisterSubmit)}>
 
-              <Controller
+              <ControlledInput
                 name="email"
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    placeholder="Email address"
-                    placeholderLabel
-                    errors={errors.email}
-                    showValidityIcon />
-                )} />
+                inputProps={{
+                  type: "email",
+                  placeholder: "Email address",
+                  placeholderLabel: true,
+                  errors: errors.email,
+                  showValidityIcon: true,
+                }} />
 
-              <Controller
+              <ControlledInput
                 name="password"
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="password"
-                    placeholder="Password"
-                    placeholderLabel
-                    errors={errors.password}
-                    showValidityIcon />
-                )} />
+                inputProps={{
+                  type: "password",
+                  placeholder: "Password",
+                  placeholderLabel: true,
+                  errors: errors.email,
+                  showValidityIcon: true,
+                }} />
 
-                <Controller
-                  name="fullName"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      placeholder="Full Name"
-                      placeholderLabel
-                      errors={errors.fullName}
-                      showValidityIcon />
-                  )} />
-  
-                <Controller
-                  name="userName"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      placeholder="Username"
-                      placeholderLabel
-                      errors={errors.userName}
-                      showValidityIcon />
-                  )} />
+              <ControlledInput
+                name="fullName"
+                control={control}
+                inputProps={{
+                  placeholder: "Full Name",
+                  placeholderLabel: true,
+                  errors: errors.fullName,
+                  showValidityIcon: true,
+                }} />
+
+              <ControlledInput
+                name="userName"
+                control={control}
+                inputProps={{
+                  placeholder: "Username",
+                  placeholderLabel: true,
+                  errors: errors.userName,
+                  showValidityIcon: true,
+                }} />
 
                 {errors.root && <Error errors={errors.root} />}
 

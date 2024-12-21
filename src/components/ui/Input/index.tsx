@@ -10,7 +10,7 @@ import { Icon } from "@iconify/react"
 import { type FieldError } from "react-hook-form"
 import clsx from "clsx"
 
-interface InputProps extends ComponentProps<"input"> {
+export interface InputProps extends ComponentProps<"input"> {
   errors?: FieldError
   showValidityIcon?: boolean
   filled?: boolean

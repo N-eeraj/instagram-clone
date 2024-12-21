@@ -8,7 +8,7 @@ import Login from "@pages/login"
 import Register from "@pages/register"
 import PageNotFound from "@pages/not-found"
 
-const userIdLoader = () => {
+const uidLoader = () => {
   return localStorage.user ?? null
 }
 
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    loader: userIdLoader,
+    loader: uidLoader,
     children: [
       {
         index: true,
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <AuthRoot />,
-    loader: userIdLoader,
+    loader: uidLoader,
     children: [
       {
         path: "/login",

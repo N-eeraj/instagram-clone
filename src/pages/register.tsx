@@ -49,9 +49,6 @@ function Register() {
       const { password, ...userData } = data
       signInUser({
         ...userData,
-        followers: 0,
-        following: 0,
-        posts: 0,
         ...user,
       })
       navigate("/")

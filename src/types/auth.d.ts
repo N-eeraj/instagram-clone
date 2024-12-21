@@ -1,3 +1,4 @@
+import * as z from "zod"
 import { registerFormSchema } from "@schemas/auth"
 
 export interface LoginFormData {

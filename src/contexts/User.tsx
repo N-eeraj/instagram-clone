@@ -2,12 +2,15 @@ import {
   createContext,
   useEffect,
   useState,
+  type PropsWithChildren,
 } from "react"
-import { ChildrenProps } from "@customTypes/common"
 import type { User } from "firebase/auth"
+import type { UserDetails } from "@customTypes/user"
+
+type UserContextType = User & UserDetails
 
 interface UserContext {
-  user: User | null
+  user: UserContextType | null
   signInUser: Function
   signOutUser: Function
 }
@@ -18,10 +21,10 @@ export const UserContext = createContext<UserContext>({
   signOutUser: () => {},
 })
 
-function UserContextProvider({ children }: ChildrenProps) {
-  const [user, setUser] = useState<User | null>(null)
+function UserContextProvider({ children }: PropsWithChildren) {
+  const [user, setUser] = useState<UserContextType | null>(null)
 
-  const signInUser = (userDetails: User) => {
+  const signInUser = (userDetails: UserContextType) => {
     localStorage.setItem("user", JSON.stringify(userDetails))
     setUser(userDetails)
   }
@@ -36,7 +39,6 @@ function UserContextProvider({ children }: ChildrenProps) {
 
   const contextValues = {
     user,
-    setUser,
     signInUser,
     signOutUser,
   }

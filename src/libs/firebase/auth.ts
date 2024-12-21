@@ -3,7 +3,10 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth"
-import { isUsernameTaken } from "@firebaseApp/store"
+import {
+  isUsernameTaken,
+  addUserData,
+} from "@firebaseApp/store"
 
 import {
   LoginFormData,
@@ -33,7 +36,7 @@ export async function handleSignIn({ email, password }: LoginFormData) {
   }
 }
 
-export async function handleSignUp({ email, password, userName }: Pick<RegisterFormData, "email" | "password" | "userName">) {
+export async function handleSignUp({ email, password, userName, fullName }: RegisterFormData) {
   try {
     if(await isUsernameTaken(userName)) {
       throw {
@@ -42,6 +45,14 @@ export async function handleSignUp({ email, password, userName }: Pick<RegisterF
       }
     }
     const { user } = await createUserWithEmailAndPassword(auth, email, password)
+    addUserData({
+      userName,
+      fullName,
+      uid: user.uid,
+      followers: 0,
+      following: 0,
+      posts: 0,
+    })
     return user
   } catch(error: any) {
     console.error(error.code)

@@ -19,7 +19,7 @@ interface ValidityIcon {
   hasErrors: boolean
 }
 
-function Input({ type, placeholder, errors, showValidityIcon = false, onChange, ...inputProps }: InputProps) {
+function Input({ type, placeholder, errors, showValidityIcon = false, className, onChange, ...inputProps }: InputProps) {
   const [currentType, setCurrentType] = useState(type)
   const togglePasswordVisibility = () => {
     setCurrentType(previousType => previousType === "password" ? "text" : "password")
@@ -32,7 +32,7 @@ function Input({ type, placeholder, errors, showValidityIcon = false, onChange, 
   }
 
   return (
-    <div>
+    <div className={className}>
       <div className={clsx(
         "relative flex items-center w-full h-9 pr-2 bg-secondary outline rounded-sm",
         errors ? "outline-red-500" : "outline-separator-light",

@@ -4,7 +4,7 @@ import {
   useState,
 } from "react"
 
-import Input from "@components/ui/Input"
+import SearchInput from "@components/NavBar/Search/Input"
 import ProfileList from "@components/profile/List"
 
 import { Icon } from "@iconify/react"
@@ -12,12 +12,8 @@ import clsx from "clsx"
 
 function Search() {
   const [showSearchMenu, setShowSearchMenu] = useState(false)
-  const searchInput = useRef<HTMLInputElement>(null)
   const [profileList, setProfileList] = useState([])
-
-  const focusInput = () => {
-    searchInput.current?.focus()
-  }
+  const inputRef = useRef(null)
 
   const clearProfileList = () => {
     setProfileList([])
@@ -25,6 +21,12 @@ function Search() {
 
   const cancelAction = () => {
     setShowSearchMenu(false)
+    inputRef.current.clear()
+  }
+
+  const searchProfiles = async (searchQuery: string) => {
+    if (!searchQuery) return
+    console.log(searchQuery)
   }
 
   useEffect(() => {
@@ -34,6 +36,12 @@ function Search() {
       document.removeEventListener("click", clearProfileList)
     }
   }, [])
+
+  useEffect(() => {
+    if (showSearchMenu) {
+      inputRef.current?.focus()
+    }
+  }, [showSearchMenu])
 
   return (
     <>
@@ -50,19 +58,9 @@ function Search() {
         )}
         onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-x-3">
-          <Input
-            type="search"
-            placeholder="Search Profile"
-            filled
-            ref={searchInput}
-            prepend={
-              <Icon
-                icon="material-symbols:search"
-                fontSize={20}
-                className="cursor-pointer"
-                onClick={focusInput} />
-            }
-            className="flex-1" />
+          <SearchInput
+            ref={inputRef}
+            onChange={searchProfiles} />
           <button 
             className="md:hidden text-sm"
             onClick={cancelAction}>

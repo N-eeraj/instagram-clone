@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useRef,
   useState,
 } from "react"
@@ -14,7 +15,25 @@ function Search() {
   const searchInput = useRef<HTMLInputElement>(null)
   const [profileList, setProfileList] = useState([])
 
-  const focusInput = () => searchInput.current?.focus()
+  const focusInput = () => {
+    searchInput.current?.focus()
+  }
+
+  const clearProfileList = () => {
+    setProfileList([])
+  }
+
+  const cancelAction = () => {
+    setShowSearchMenu(false)
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", clearProfileList)
+  
+    return () => {
+      document.removeEventListener("click", clearProfileList)
+    }
+  }, [])
 
   return (
     <>
@@ -24,10 +43,12 @@ function Search() {
           className="md:hidden text-4xl md:text-3xl" />
       </button>
 
-      <div className={clsx(
-        "md:block w-full min-w-60",
-        showSearchMenu ? "fixed top-0 left-0 flex flex-col gap-y-3 w-screen h-svh p-4 bg-secondary" : "hidden relative max-w-72",
-      )}>
+      <div
+        className={clsx(
+          "md:block w-full min-w-60",
+          showSearchMenu ? "fixed top-0 left-0 flex flex-col gap-y-3 w-screen h-svh p-4 bg-secondary" : "hidden relative max-w-72",
+        )}
+        onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-x-3">
           <Input
             type="search"
@@ -44,7 +65,7 @@ function Search() {
             className="flex-1" />
           <button 
             className="md:hidden text-sm"
-            onClick={() => setShowSearchMenu(false)}>
+            onClick={cancelAction}>
             Cancel
           </button>
         </div>

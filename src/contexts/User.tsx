@@ -7,19 +7,19 @@ import {
 
 import { auth } from "@firebaseApp/auth"
 import type { User } from "firebase/auth"
+import type {
+  UserDetails,
+  UserContextType,
+} from "@customTypes/user"
 
-interface UserContext {
-  authUser: User | null
-  setAuthUser: Function
-}
-
-export const UserContext = createContext<UserContext>({
+export const UserContext = createContext<UserContextType>({
   authUser: null,
-  setAuthUser: (_args: User | null) => {},
+  userDetails: null,
 })
 
 function UserContextProvider({ children }: PropsWithChildren) {
   const [authUser, setAuthUser] = useState<User | null>(JSON.parse(localStorage.getItem("authUser") ?? "null"))
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null)
 
   const handleAuthState = () => {
     auth.onAuthStateChanged((authUser) => {
@@ -34,7 +34,7 @@ function UserContextProvider({ children }: PropsWithChildren) {
 
   const contextValues = {
     authUser,
-    setAuthUser,
+    userDetails,
   }
 
   return (

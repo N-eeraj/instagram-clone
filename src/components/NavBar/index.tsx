@@ -1,11 +1,14 @@
+import { use } from "react"
 import {
   Link,
   useLocation,
 } from "react-router"
 import Search from "@components/NavBar/Search"
+import { UserContext } from "@contexts/User"
 import { Icon } from "@iconify/react"
 
 function NavBar() {
+  const { userDetails } = use(UserContext)
   const { pathname } = useLocation()
   const isHomePage = pathname === "/"
   const isProfilePage = pathname === "/profile"
@@ -33,9 +36,15 @@ function NavBar() {
           <Search />
 
           <Link to="/profile">
-            <Icon
-              icon={`ic:${isProfilePage ? "baseline" : "outline"}-account-circle`}
-              className="text-4xl md:text-3xl" />
+            {userDetails?.profilePicture ?
+              <img
+                src="/favicon.png"
+                alt="profile-picture"
+                className="size-9 md:size-[30px] rounded-full" /> :
+              <Icon
+                icon={`ic:${isProfilePage ? "baseline" : "outline"}-account-circle`}
+                className="text-4xl md:text-3xl" />
+            }
           </Link>
         </div>
       </div>

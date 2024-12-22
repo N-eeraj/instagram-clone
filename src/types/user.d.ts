@@ -5,4 +5,10 @@ export interface UserDetails {
   posts: number
   uid: string
   userName: string
+  profilePicture?: string
+}
+
+export interface UserContextType {
+  authUser: User | null
+  userDetails: UserDetails | null
 }

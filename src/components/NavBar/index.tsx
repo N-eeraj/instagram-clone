@@ -12,7 +12,8 @@ function NavBar() {
   const { pathname } = useLocation()
   const isHomePage = pathname === "/"
   const isProfilePage = pathname === "/profile"
-  
+
+  if (!userDetails) return
 
   return (
     <nav className="sticky top-0 pt-4 pb-2 px-4 bg-secondary md:bg-zinc-900 z-20">
@@ -35,12 +36,12 @@ function NavBar() {
 
           <Search />
 
-          <Link to="/profile">
+          <Link to={userDetails?.userName}>
             {userDetails?.profilePicture ?
               <img
-                src="/favicon.png"
+                src={userDetails.profilePicture}
                 alt="profile-picture"
-                className="size-9 md:size-[30px] rounded-full" /> :
+                className="size-9 md:size-[30px] rounded-full object-cover" /> :
               <Icon
                 icon={`ic:${isProfilePage ? "baseline" : "outline"}-account-circle`}
                 className="text-4xl md:text-3xl" />

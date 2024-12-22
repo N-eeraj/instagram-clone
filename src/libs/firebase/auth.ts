@@ -49,11 +49,10 @@ export async function handleSignUp({ email, password, userName, fullName }: Regi
     addUserData({
       userName,
       fullName,
-      uid: user.uid,
       followers: 0,
       following: 0,
       posts: 0,
-    })
+    }, user.uid)
     return user
   } catch(error: any) {
     console.error(error.code)

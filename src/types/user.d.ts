@@ -1,12 +1,8 @@
-export interface UserDetails {
-  followers: number
-  following: number
-  fullName: string
-  posts: number
-  uid: string
-  userName: string
-  profilePicture?: string
-}
+import * as z from "zod"
+import type { User } from "firebase/auth"
+import { userDetailsSchema } from "@schemas/user"
+
+export type UserDetails = z.infer<typeof userDetailsSchema>
 
 export interface UserContextType {
   authUser: User | null

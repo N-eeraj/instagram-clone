@@ -5,17 +5,16 @@ import {
   useImperativeHandle,
   type ChangeEvent,
   type RefObject,
-  type Dispatch,
 } from "react"
 import { useLocation } from "react-router"
 import Input from "@components/ui/Input"
 import { Icon } from "@iconify/react"
 import { useDebounce } from "use-debounce"
 
+export type SearchInputRef = Record<"clear" | "focus", Function> | null
+
 interface SearchInputProps {
-  ref: RefObject<{
-    clear: Dispatch<React.SetStateAction<string>>
-  }>
+  ref: RefObject<SearchInputRef>
   onChange: (_arg: string) => void
 }
 
@@ -41,6 +40,7 @@ function SearchInput({ ref, onChange }: SearchInputProps) {
     setSearchValue("")
   }, [location])
 
+  // to handle focus & clear of the input field outside the component using ref
   useImperativeHandle(ref, () => ({
     focus: focusInput,
     clear: () => setSearchValue("")

@@ -1,10 +1,12 @@
 import {
-  useEffect,
   useRef,
   useState,
+  useEffect,
 } from "react"
 
-import SearchInput from "@components/NavBar/Search/Input"
+import SearchInput, {
+  type SearchInputRef,
+} from "@components/NavBar/Search/Input"
 import ProfileList from "@components/profile/List"
 
 import { Icon } from "@iconify/react"
@@ -13,7 +15,7 @@ import clsx from "clsx"
 function Search() {
   const [showSearchMenu, setShowSearchMenu] = useState(false)
   const [profileList, setProfileList] = useState([])
-  const inputRef = useRef(null)
+  const inputRef = useRef<SearchInputRef>(null)
 
   const clearProfileList = () => {
     setProfileList([])
@@ -21,7 +23,7 @@ function Search() {
 
   const cancelAction = () => {
     setShowSearchMenu(false)
-    inputRef.current.clear()
+    inputRef.current?.clear()
   }
 
   const searchProfiles = async (searchQuery: string) => {

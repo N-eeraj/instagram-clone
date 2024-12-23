@@ -7,6 +7,7 @@ import PublicLayout from "@layouts/Public"
 import Home from "@pages/home"
 import Login from "@pages/login"
 import Register from "@pages/register"
+import Profile from "@pages/profile"
 import PageNotFound from "@pages/not-found"
 
 const router = createBrowserRouter([
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: ":userName",
-        element: <>element</>,
+        element: <Profile />,
       },
       {
         path: "*",

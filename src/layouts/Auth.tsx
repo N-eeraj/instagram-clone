@@ -1,6 +1,6 @@
 import { Outlet } from "react-router"
 
-import NavBar from "@components/NavBar"
+import AuthNavBar from "@components/NavBar/Auth"
 import useAuthGuard from "@hooks/useAuthGuard"
 
 function AuthLayout() {
@@ -8,7 +8,7 @@ function AuthLayout() {
 
   return (
     <main className="relative min-h-svh bg-secondary text-zinc-300">
-      <NavBar />
+      <AuthNavBar />
       <div className="max-w-5xl mx-auto px-4 lg:px-0 pb-20 md:py-5">
         <Outlet />
       </div>

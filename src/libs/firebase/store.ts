@@ -2,6 +2,7 @@ import {
   doc,
   query,
   where,
+  limit,
   setDoc,
   getDoc,
   getDocs,
@@ -16,7 +17,7 @@ import type { UserDetails } from "@customTypes/user"
 const firestore = getFirestore(app)
 
 export async function isUsernameTaken(userName: string): Promise<boolean> {
-  const firestoreQuery = query(collection(firestore, "users"), where("userName", "==", userName))
+  const firestoreQuery = query(collection(firestore, "users"), where("userName", "==", userName), limit(1))
   const queryCollection = await getDocs(firestoreQuery)
   return !queryCollection.empty
 }

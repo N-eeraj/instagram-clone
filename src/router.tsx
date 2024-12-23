@@ -44,6 +44,10 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
+        path: "profile-not-found",
+        element: <PageNotFound />,
+      },
+      {
         path: "*",
         element: <PageNotFound />,
       },

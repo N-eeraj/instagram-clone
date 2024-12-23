@@ -1,6 +1,6 @@
 # Instagram Clone
 
-## 👨‍💻 Tech Used
+## 👨‍💻 Packages & Libraries Used
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Firebase](https://firebase.google.com/)
@@ -10,4 +10,5 @@
 - [Zod](https://zod.dev/)
 - [Iconify React](https://iconify.design/docs/icon-components/react/)
 - [clsx](https://github.com/lukeed/clsx)
+- [use-debounce](https://github.com/xnimorz/use-debounce)
 - [Storybook](https://storybook.js.org/)

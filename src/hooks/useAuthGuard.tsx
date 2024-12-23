@@ -13,8 +13,8 @@ export default function useAuthGuard(guard: GuardType) {
   const navigate = useNavigate()
 
   const navigateToPage: Record<GuardType, Function> = {
-    auth: () => !authUser && navigate("/login"),
-    guest: () => authUser && navigate("/")
+    auth: () => !authUser && navigate("/login", { replace: true }),
+    guest: () => authUser && navigate("/", { replace: true }),
   }
 
   useEffect(() => {

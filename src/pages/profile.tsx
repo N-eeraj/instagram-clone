@@ -19,7 +19,7 @@ function Profile() {
   const fetchUserProfile = async () => {
     const profileDetails = await fetchProfileByUserName(userName as string)
     if (!profileDetails) {
-      return navigate("/profile-not-found")
+      return navigate("/profile-not-found", { replace: true })
     }
     setProfileDetails(profileDetails)
   }

@@ -109,7 +109,8 @@ function Register() {
 
                 <Button
                   disabled={!isValid}
-                  loading={isSubmitting}>
+                  loading={isSubmitting}
+                  className="mt-2">
                   Sign Up
                 </Button>
             </form>

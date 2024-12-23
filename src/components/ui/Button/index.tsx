@@ -14,7 +14,7 @@ function Button({ loading, disabled, className, children, ...buttonProps }: Butt
       {...buttonProps}
       disabled={disabled || loading}
       className={clsx(
-        "min-w-24 h-8 mt-2 px-2 bg-primary-button text-primary-text rounded-lg",
+        "h-8 px-4 bg-primary-button text-primary-text rounded-lg",
         (disabled || loading) && "opacity-70 cursor-not-allowed",
         !(disabled && loading) && "hover:bg-primary-button-hovered",
         className,

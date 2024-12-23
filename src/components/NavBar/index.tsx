@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react"
 
 function NavBar({ children }: PropsWithChildren) {
   return (
-    <nav className="sticky top-0 pt-4 pb-2 px-4 bg-secondary md:bg-zinc-900 z-20">
+    <nav className="sticky top-0 pt-4 pb-2 px-4 bg-secondary border-b border-b-separator-light z-20">
       <div className="flex justify-between items-center max-w-5xl mx-auto">
         <Link to="/">
           <Icon

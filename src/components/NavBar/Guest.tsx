@@ -5,16 +5,16 @@ import Button from "@components/ui/Button"
 function GuestNavBar() {
   return (
     <NavBar>
-      <div className="flex gap-x-4">
+      <div className="flex items-center gap-x-4">
         <Link to="/login">
-          <Button>
+          <Button className="w-fit font-semibold">
             Log in
           </Button>
         </Link>
-        <Link to="/login">
-          <Button>
-            Sign up
-          </Button>
+        <Link
+          to="/login"
+          className="text-primary-button font-semibold">
+          Sign up
         </Link>
       </div>
     </NavBar>

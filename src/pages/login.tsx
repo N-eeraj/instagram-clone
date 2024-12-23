@@ -83,7 +83,8 @@ function Login() {
 
                 <Button
                   disabled={!isValid}
-                  loading={isSubmitting}>
+                  loading={isSubmitting}
+                  className="mt-2">
                   Login
                 </Button>
 

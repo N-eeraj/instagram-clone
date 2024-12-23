@@ -1,16 +1,19 @@
 import { use } from "react"
 import UserProfileActions from "@components/profile/Header/Actions/User"
 import ExternalProfileActions from "@components/profile/Header/Actions/External"
-import { UserContext } from "@contexts/User"
+import { ProfileViewContext } from "@contexts/ProfileView"
 
 import { Icon } from "@iconify/react"
 import clsx from "clsx"
-import type { UserProfile } from "@customTypes/user"
 
-function ProfileHeader(profileDetails: UserProfile) {
+function ProfileHeader() {
+  const {
+    profileDetails,
+    isUserProfile,
+  } = use(ProfileViewContext)
+  if (!profileDetails) return
+
   const { userName, fullName, about, profilePicture, ...details } = profileDetails
-  const { userProfile } = use(UserContext)
-  const isUserProfile = userProfile?.userName === userName
 
   const triggerChangeDp = () => {
     console.log("change dp")
@@ -51,9 +54,7 @@ function ProfileHeader(profileDetails: UserProfile) {
       <div className="inline-flex gap-x-2 md:pb-5">
         {isUserProfile ?
           <UserProfileActions /> :
-          <ExternalProfileActions
-            profileDetails={profileDetails}
-            isGuest={!userProfile} />
+          <ExternalProfileActions />
         }
       </div>
 

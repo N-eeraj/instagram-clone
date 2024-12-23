@@ -1,18 +1,25 @@
+import { use } from "react"
 import Button from "@components/ui/Button"
-import type { UserProfile } from "@customTypes/user"
+import { ProfileViewContext } from "@contexts/ProfileView"
 
-interface ProfileActionsProps {
-  profileDetails: UserProfile
-  isGuest: boolean
-}
+function ProfileActions() {
+  const {
+    profileDetails,
+    isGuest
+  } = use(ProfileViewContext)
+  if (!profileDetails) return
 
-function ProfileActions({ profileDetails, isGuest }: ProfileActionsProps) {
+  const followUser = async () => {
+    console.log(profileDetails.userName)
+  }
+
   return (
     <>
       <Button
         disabled={isGuest}
         grayOnDisable
-        className="flex-1 md:grow-0">
+        className="flex-1 md:grow-0"
+        onClick={followUser}>
         Follow
       </Button>
     </>

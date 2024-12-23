@@ -8,3 +8,9 @@ export interface UserContextType {
   authUser: User | null
   userProfile: UserProfile | null
 }
+
+export interface ProfileViewContextType {
+  profileDetails: UserProfile | null
+  isUserProfile: boolean
+  isGuest: boolean
+}

@@ -1,14 +1,23 @@
 import Button from "@components/ui/Button"
+import { Link } from "react-router"
 
 function UserProfileActions() {
+  const triggerLogoutConfirmation = () => {
+    console.log("logout")
+  }
+
   return (
     <>
-      <Button
+      <Link
+        to="/edit-profile"
         className="w-full md:w-fit">
-        Edit Profile
-      </Button>
+        <Button>
+          Edit Profile
+        </Button>
+      </Link>
       <Button
-        className="w-full md:w-fit">
+        className="w-full md:w-fit"
+        onClick={triggerLogoutConfirmation}>
         Logout
       </Button>
     </>

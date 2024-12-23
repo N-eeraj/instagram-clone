@@ -10,7 +10,7 @@ function ProfileActions() {
   if (!profileDetails) return
 
   const followUser = async () => {
-    console.log(profileDetails.userName)
+    console.log("follow", profileDetails.userName)
   }
 
   return (

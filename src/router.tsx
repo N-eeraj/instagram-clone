@@ -19,6 +19,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      {
+        path: "edit-profile",
+        element: <>Edit Profile</>,
+      },
     ],
   },
   {

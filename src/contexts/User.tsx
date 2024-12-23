@@ -6,21 +6,21 @@ import {
 } from "react"
 
 import { auth } from "@firebaseApp/auth"
-import { fetchUserProfile } from "@firebaseApp/store"
+import { fetchProfileByUid } from "@firebaseApp/store"
 import type { User } from "firebase/auth"
 import type {
-  UserDetails,
+  UserProfile,
   UserContextType,
 } from "@customTypes/user"
 
 export const UserContext = createContext<UserContextType>({
   authUser: null,
-  userDetails: null,
+  userProfile: null,
 })
 
 function UserContextProvider({ children }: PropsWithChildren) {
   const [authUser, setAuthUser] = useState<User | null>(JSON.parse(localStorage.getItem("authUser") ?? "null"))
-  const [userDetails, setUserDetails] = useState<UserDetails | null>(null)
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [loadingProfile, setLoadingProfile] = useState(true)
 
   const handleAuthState = () => {
@@ -29,8 +29,8 @@ function UserContextProvider({ children }: PropsWithChildren) {
       localStorage.setItem("authUser", JSON.stringify(authUser))
       if (authUser) {
         setLoadingProfile(true)
-        const userDetails = await fetchUserProfile(authUser.uid)
-        setUserDetails(userDetails)
+        const userProfile = await fetchProfileByUid(authUser.uid)
+        setUserProfile(userProfile)
         setLoadingProfile(false)
       } else {
         setLoadingProfile(false)
@@ -44,7 +44,7 @@ function UserContextProvider({ children }: PropsWithChildren) {
 
   const contextValues = {
     authUser,
-    userDetails,
+    userProfile,
   }
 
   return (

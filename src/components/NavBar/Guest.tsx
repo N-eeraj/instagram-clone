@@ -12,7 +12,7 @@ function GuestNavBar() {
           </Button>
         </Link>
         <Link
-          to="/login"
+          to="/register"
           className="text-primary-button font-semibold">
           Sign up
         </Link>

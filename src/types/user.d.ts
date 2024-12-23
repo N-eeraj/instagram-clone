@@ -1,10 +1,10 @@
 import * as z from "zod"
 import type { User } from "firebase/auth"
-import { userDetailsSchema } from "@schemas/user"
+import { userProfileSchema } from "@schemas/user"
 
-export type UserDetails = z.infer<typeof userDetailsSchema>
+export type UserProfile = z.infer<typeof userProfileSchema>
 
 export interface UserContextType {
   authUser: User | null
-  userDetails: UserDetails | null
+  userProfile: UserProfile | null
 }

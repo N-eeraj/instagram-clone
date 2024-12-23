@@ -10,8 +10,8 @@ import { UserContext } from "@contexts/User"
 import { Icon } from "@iconify/react"
 
 function AuthNavBar() {
-  const { userDetails } = use(UserContext)
-  if (!userDetails) return
+  const { userProfile } = use(UserContext)
+  if (!userProfile) return
 
   const { pathname } = useLocation()
   const isHomePage = pathname === "/"
@@ -30,10 +30,10 @@ function AuthNavBar() {
 
         <Search />
 
-        <Link to={userDetails?.userName}>
-          {userDetails?.profilePicture ?
+        <Link to={userProfile?.userName}>
+          {userProfile?.profilePicture ?
             <img
-              src={userDetails.profilePicture}
+              src={userProfile.profilePicture}
               alt="profile-picture"
               className="size-9 md:size-[30px] rounded-full object-cover" /> :
             <Icon

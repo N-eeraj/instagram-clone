@@ -6,11 +6,11 @@ import GuestNavBar from "@components/NavBar/Guest"
 import { UserContext } from "@contexts/User"
 
 function PublicLayout() {
-  const { userDetails } = use(UserContext)
+  const { userProfile } = use(UserContext)
 
   return (
     <main className="relative min-h-svh bg-secondary text-zinc-300">
-      {userDetails ?
+      {userProfile ?
         <AuthNavBar /> :
         <GuestNavBar />
       }

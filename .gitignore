@@ -24,4 +24,6 @@ dist-ssr
 *.sln
 *.sw?
 
+# Storybook directories and files
 *storybook.log
+storybook-static

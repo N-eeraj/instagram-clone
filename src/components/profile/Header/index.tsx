@@ -2,6 +2,7 @@ import { use } from "react"
 import DisplayPicture from "@components/profile/Header/DisplayPicture"
 import UserProfileActions from "@components/profile/Header/Actions/User"
 import ExternalProfileActions from "@components/profile/Header/Actions/External"
+import ProfileOverview from "@components/profile/Header/Overview"
 import { ProfileViewContext } from "@contexts/ProfileView"
 
 function ProfileHeader() {
@@ -39,9 +40,10 @@ function ProfileHeader() {
           {about}
         </p>
       </div>
-      <div className="col-span-2 md:self-start h-full md:h-10">
-        {JSON.stringify(details)}
-      </div>
+
+      <ProfileOverview
+        {...details}
+        className="col-span-2 md:self-start h-full md:h-10" />
     </header>
   )
 }

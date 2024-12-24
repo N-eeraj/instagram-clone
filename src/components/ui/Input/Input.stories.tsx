@@ -1,11 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type {
+  Meta,
+  StoryObj,
+} from "@storybook/react"
+import { fn } from "@storybook/test"
 
 import Input from "./index"
 
 const meta: Meta<typeof Input> = {
-  title: "Input",
+  title: "UI/Input",
   component: Input,
-  args: {}
+  args: {
+    onChange: fn(),
+  },
 }
 
 export default meta

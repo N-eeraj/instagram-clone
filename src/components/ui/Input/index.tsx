@@ -38,7 +38,7 @@ function Input({ type, placeholder, errors, showValidityIcon = false, filled, pl
   return (
     <div className={className}>
       <div className={clsx(
-        "relative flex items-center w-full h-9 pr-2 rounded-sm",
+        "relative flex items-center w-full h-9 pr-2 rounded-sm text-primary-text",
         filled ? "bg-white/5" : "bg-secondary outline",
         errors ? "outline-red-500" : "outline-separator-light",
         prepend && "pl-2"

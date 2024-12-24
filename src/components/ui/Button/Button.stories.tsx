@@ -14,13 +14,22 @@ export default meta
 type Story = StoryObj<typeof Button>
 
 export const Primary: Story = {
-  args: {
-  },
+  args: {},
 }
 
 export const Disabled: Story = {
   args: {
+    title: "Disabled/Default",
     children: "Disabled Button",
+    disabled: true,
+  },
+}
+
+export const DisabledGray: Story = {
+  args: {
+    title: "Disabled/Gray",
+    children: "Disabled Gray Button",
+    grayOnDisable: true,
     disabled: true,
   },
 }

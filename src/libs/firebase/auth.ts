@@ -1,5 +1,6 @@
 import {
   getAuth,
+  signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth"
@@ -79,4 +80,8 @@ export async function handleSignUp({ email, password, userName, fullName }: Regi
         }
     }
   }
+}
+
+export async function handleSignOut() {
+  await signOut(auth)
 }

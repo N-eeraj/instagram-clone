@@ -1,9 +1,16 @@
+import {
+  Link,
+  useNavigate,
+} from "react-router"
 import Button from "@components/ui/Button"
-import { Link } from "react-router"
+import { handleSignOut } from "@firebaseApp/auth"
 
 function UserProfileActions() {
-  const triggerLogoutConfirmation = () => {
-    console.log("logout")
+  const navigate = useNavigate()
+
+  const triggerLogoutConfirmation = async () => {
+    await handleSignOut()
+    navigate("/login", { replace: true })
   }
 
   return (

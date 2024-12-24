@@ -19,7 +19,7 @@ function AuthNavBar() {
 
   return (
     <NavBar>
-      <div className="fixed md:relative flex justify-between items-center left-0 bottom-0 w-full md:w-1/2 px-12 py-3 md:p-0">
+      <div className="fixed md:relative flex justify-between items-center left-0 bottom-0 w-full md:w-1/2 px-12 py-3 md:p-0 bg-secondary">
         <Link
           to="/"
           className="md:hidden">

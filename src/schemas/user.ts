@@ -7,5 +7,5 @@ export const userProfileSchema = z.object({
   following: z.number(),
   posts: z.number(),
   profilePicture: z.string().optional(),
-  about: z.string().optional(),
+  bio: z.string().optional(),
 })

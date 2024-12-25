@@ -1,12 +1,22 @@
+import { use } from "react"
 import { Link } from "react-router"
-import { UserProfile } from "@customTypes/user"
+import { ProfileViewContext } from "@contexts/ProfileView"
 import clsx from "clsx"
 
-type ProfileOverviewProps = Pick<UserProfile, "posts" | "followers" | "following"> & {
-  className?: string
-}
+function ProfileOverview({ className }: { className?: string }) {
+  const {
+    profileDetails,
+    isGuest,
+  } = use(ProfileViewContext)
+  if (!profileDetails) return
 
-function ProfileOverview({ posts, followers, following, className }: ProfileOverviewProps) {
+  const {
+    userName,
+    posts,
+    followers,
+    following,
+  } = profileDetails
+
   return (
     <ul className={clsx(
       "relative flex justify-around md:justify-start items-center md:gap-x-10",
@@ -26,8 +36,9 @@ function ProfileOverview({ posts, followers, following, className }: ProfileOver
       </li>
       <li>
         <Link
-          to="/"
-          className="flex flex-col md:flex-row items-center md:gap-x-1">
+          to={`/${userName}/followers`}
+          className="flex flex-col md:flex-row items-center md:gap-x-1"
+          onClick={e => isGuest && e.preventDefault()}>
           <strong className="text-white">
             {followers}
           </strong>
@@ -38,8 +49,9 @@ function ProfileOverview({ posts, followers, following, className }: ProfileOver
       </li>
       <li>
         <Link
-          to="/"
-          className="flex flex-col md:flex-row items-center md:gap-x-1">
+          to={`/${userName}/following`}
+          className="flex flex-col md:flex-row items-center md:gap-x-1"
+          onClick={e => isGuest && e.preventDefault()}>
           <strong className="text-white">
             {following}
           </strong>

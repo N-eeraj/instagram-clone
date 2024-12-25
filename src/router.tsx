@@ -45,7 +45,20 @@ const router = createBrowserRouter([
     children: [
       {
         path: ":userName",
-        element: <Profile />,
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "followers",
+            element: <>followers</>,
+          },
+          {
+            path: "following",
+            element: <>following</>,
+          },
+        ],
       },
       {
         path: "profile-not-found",

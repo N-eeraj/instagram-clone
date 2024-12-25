@@ -12,7 +12,7 @@ function ProfileHeader() {
   } = use(ProfileViewContext)
   if (!profileDetails) return
 
-  const { userName, fullName, about, profilePicture, ...details } = profileDetails
+  const { userName, fullName, bio, profilePicture, ...details } = profileDetails
 
   return (
     <header className="grid grid-cols-[105px,auto] md:grid-cols-[290px,auto,minmax(100px,1fr)] grid-rows-[auto,auto,auto,60px] md:grid-rows-[auto,auto,auto] items-center max-w-[935px] mx-auto md:pb-10">
@@ -37,13 +37,11 @@ function ProfileHeader() {
           {fullName}
         </h1>
         <p>
-          {about}
+          {bio}
         </p>
       </div>
 
-      <ProfileOverview
-        {...details}
-        className="col-span-2 md:self-start h-full md:h-10" />
+      <ProfileOverview className="col-span-2 md:self-start h-full md:h-10" />
     </header>
   )
 }

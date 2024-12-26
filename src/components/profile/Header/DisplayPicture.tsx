@@ -1,4 +1,7 @@
-import { use } from "react"
+import {
+  use,
+  useState,
+} from "react"
 
 import DisplayPicture from "@components/DisplayPicture"
 import UpdatableDisplayPicture from "@components/DisplayPicture/Updatable"
@@ -13,6 +16,7 @@ function ProfileDisplayPicture() {
   const {
     profileDetails,
     isUserProfile,
+    setProfileDetails,
   } = use(ProfileViewContext)
   const {
     authUser,
@@ -21,8 +25,11 @@ function ProfileDisplayPicture() {
   } = use(UserContext)
   if (!profileDetails) return
 
+  const [isLoading, setIsLoading] = useState(false)
+
   if (isUserProfile && authUser && userProfile) {
     const handleDPChange = async (file: File) => {
+      setIsLoading(true)
       const fileId = await createFile(file)
       updateDp(authUser.uid, fileId)
       const url = await readFile(fileId)
@@ -31,12 +38,18 @@ function ProfileDisplayPicture() {
         profilePicture: fileId,
         displayPicture: url,
       })
+      setProfileDetails({
+        ...profileDetails,
+        displayPicture: url,
+      })
+      setIsLoading(false)
     }
 
     return (
       <UpdatableDisplayPicture
         displayPicture={profileDetails.displayPicture}
         userName={profileDetails.userName}
+        loading={isLoading}
         onChange={handleDPChange} />
     )
   }

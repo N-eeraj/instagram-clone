@@ -7,6 +7,8 @@ import {
 
 import { auth } from "@firebaseApp/auth"
 import { fetchProfileByUid } from "@firebaseApp/store"
+import readFile from "@appwriteStorage/read"
+
 import type { User } from "firebase/auth"
 import type {
   UserProfile,
@@ -16,6 +18,7 @@ import type {
 export const UserContext = createContext<UserContextType>({
   authUser: null,
   userProfile: null,
+  setUserProfile: (_args: UserProfile | null) => {},
 })
 
 function UserContextProvider({ children }: PropsWithChildren) {
@@ -30,6 +33,9 @@ function UserContextProvider({ children }: PropsWithChildren) {
       if (authUser) {
         setLoadingProfile(true)
         const userProfile = await fetchProfileByUid(authUser.uid)
+        if (userProfile.profilePicture) {
+          userProfile.displayPicture = await readFile(userProfile.profilePicture)
+        }
         setUserProfile(userProfile)
         setLoadingProfile(false)
       } else {
@@ -45,6 +51,7 @@ function UserContextProvider({ children }: PropsWithChildren) {
   const contextValues = {
     authUser,
     userProfile,
+    setUserProfile,
   }
 
   return (

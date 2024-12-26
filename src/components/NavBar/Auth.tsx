@@ -31,9 +31,9 @@ function AuthNavBar() {
         <Search />
 
         <Link to={userProfile?.userName}>
-          {userProfile?.profilePicture ?
+          {userProfile?.displayPicture ?
             <img
-              src={userProfile.profilePicture}
+              src={userProfile.displayPicture}
               alt="profile-picture"
               className="size-9 md:size-[30px] rounded-full object-cover" /> :
             <Icon

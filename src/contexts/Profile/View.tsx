@@ -12,6 +12,8 @@ import {
 
 import { UserContext } from "@contexts/User"
 import { fetchProfileByUserName } from "@firebaseApp/store"
+import readFile from "@appwriteStorage/read"
+
 import type {
   UserProfile,
   ProfileViewContextType,
@@ -32,6 +34,9 @@ function ProfileViewContextProvider({ children }: PropsWithChildren) {
     const profileDetails = await fetchProfileByUserName(userName as string)
     if (!profileDetails) {
       return navigate("/profile-not-found", { replace: true })
+    }
+    if (profileDetails.profilePicture) {
+      profileDetails.displayPicture = await readFile(profileDetails.profilePicture)
     }
     setProfileDetails(profileDetails)
   }

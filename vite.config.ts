@@ -15,6 +15,7 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@contexts': path.resolve(__dirname, './src/contexts'),
       '@firebaseApp': path.resolve(__dirname, './src/libs/firebase'),
+      '@appwriteStorage': path.resolve(__dirname, './src/libs/appwrite'),
       '@schemas': path.resolve(__dirname, './src/schemas'),
       '@customTypes': path.resolve(__dirname, './src/types'),
     },

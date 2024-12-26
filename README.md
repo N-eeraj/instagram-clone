@@ -4,6 +4,7 @@
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Firebase](https://firebase.google.com/)
+- [Appwrite](https://appwrite.io/)
 - [React Router](https://reactrouter.com/en/main)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [React Hook Form](https://react-hook-form.com/)

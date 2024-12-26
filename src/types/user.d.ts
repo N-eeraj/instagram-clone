@@ -14,3 +14,5 @@ export interface ProfileViewContextType {
   isUserProfile: boolean
   isGuest: boolean
 }
+
+export type DisplayPictureType = Pick<UserProfile, "userName" | "profilePicture">

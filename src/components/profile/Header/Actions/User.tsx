@@ -16,10 +16,10 @@ function UserProfileActions() {
   return (
     <>
       <Link
-        to="/edit-profile"
+        to="/update-profile"
         className="w-full md:w-fit">
         <Button>
-          Edit Profile
+          Update Profile
         </Button>
       </Link>
       <Button

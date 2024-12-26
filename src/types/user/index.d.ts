@@ -16,6 +16,7 @@ export interface ProfileViewContextType {
   profileDetails: UserProfile | null
   isUserProfile: boolean
   isGuest: boolean
+  setProfileDetails: (_args: UserProfile | null) => void
 }
 
 export type DisplayPictureType = Pick<UserProfile, "userName" | "displayPicture">

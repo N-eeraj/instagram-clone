@@ -1,21 +1,28 @@
 import {
   useId,
-  ChangeEvent,
+  useState,
+  type ChangeEvent,
 } from "react"
 import DisplayPicture from "@components/DisplayPicture"
 import { Icon } from "@iconify/react"
 import type { DisplayPictureType } from "@customTypes/user"
+import clsx from "clsx"
 
-type DisplayPictureProps = DisplayPictureType & { onChange: (_file:  File, url: string) => any }
+type DisplayPictureProps = DisplayPictureType & {
+  loading?: boolean
+  onChange: (_file:  File) => any
+}
 
-function UpdatableDisplayPicture({ displayPicture, userName, onChange }: DisplayPictureProps) {
+function UpdatableDisplayPicture({ displayPicture, userName, loading, onChange }: DisplayPictureProps) {
   const inputId = useId()
+  const [tempDp, setTempDp] = useState<string | null>(null)
 
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const files = target.files
     if (files && files.length) {
       const file = files[0]
-      onChange(file, URL.createObjectURL(file))
+      setTempDp(URL.createObjectURL(file))
+      onChange(file)
     }
   }
 
@@ -28,13 +35,17 @@ function UpdatableDisplayPicture({ displayPicture, userName, onChange }: Display
         id={inputId}
         type="file"
         hidden
-        className="hidden"
+        disabled={loading}
         accept=".png, .jpeg, .webp, .heic, .avif"
+        className="hidden"
         onChange={handleFileChange} />
 
       <DisplayPicture
-        displayPicture={displayPicture}
-        userName={userName} />
+        displayPicture={(loading && tempDp) ? tempDp : displayPicture}
+        userName={userName}
+        className={clsx(
+          loading && "brightness-50",
+        )} />
 
       {!displayPicture && (
         <Icon

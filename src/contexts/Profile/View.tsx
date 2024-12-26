@@ -23,6 +23,7 @@ export const ProfileViewContext = createContext<ProfileViewContextType>({
   profileDetails: null,
   isUserProfile: false,
   isGuest: true,
+  setProfileDetails: (_args: UserProfile | null) => {},
 })
 
 function ProfileViewContextProvider({ children }: PropsWithChildren) {
@@ -55,6 +56,7 @@ function ProfileViewContextProvider({ children }: PropsWithChildren) {
     profileDetails: profileDetails,
     isUserProfile,
     isGuest: !userProfile,
+    setProfileDetails,
   }
 
   return (

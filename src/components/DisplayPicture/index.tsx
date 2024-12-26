@@ -1,11 +1,11 @@
 import { Icon } from "@iconify/react"
 import type { DisplayPictureType } from "@customTypes/user"
 
-function DisplayPicture({ profilePicture, userName }: DisplayPictureType) {
-  if (profilePicture) {
+function DisplayPicture({ displayPicture, userName }: DisplayPictureType) {
+  if (displayPicture) {
     return (
       <img
-        src={profilePicture}
+        src={displayPicture}
         alt={userName}
         className="size-[77px] md:size-[150px] rounded-full object-cover" />
     )

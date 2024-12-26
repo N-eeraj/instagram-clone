@@ -9,5 +9,5 @@ export default async function createFile(file: File) {
     ID.unique(),
     file
   )
-  return response
+  return response.$id
 }

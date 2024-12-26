@@ -6,7 +6,9 @@ import DisplayPicture from "@components/DisplayPicture"
 import { Icon } from "@iconify/react"
 import type { DisplayPictureType } from "@customTypes/user"
 
-function UpdatableDisplayPicture({ profilePicture, userName, onChange }: DisplayPictureType & { onChange: Function }) {
+type DisplayPictureProps = DisplayPictureType & { onChange: (_file:  File, url: string) => any }
+
+function UpdatableDisplayPicture({ displayPicture, userName, onChange }: DisplayPictureProps) {
   const inputId = useId()
 
   const handleFileChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -31,10 +33,10 @@ function UpdatableDisplayPicture({ profilePicture, userName, onChange }: Display
         onChange={handleFileChange} />
 
       <DisplayPicture
-        profilePicture={profilePicture}
+        displayPicture={displayPicture}
         userName={userName} />
 
-      {!profilePicture && (
+      {!displayPicture && (
         <Icon
           icon="mdi-plus"
           className="absolute right-0 bottom-0 p-1 bg-primary-button text-xl md:text-3xl rounded-full" />

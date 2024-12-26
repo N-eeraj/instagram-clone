@@ -6,6 +6,7 @@ import {
   setDoc,
   getDoc,
   getDocs,
+  updateDoc,
   collection,
   getFirestore,
 } from "firebase/firestore"
@@ -40,4 +41,11 @@ export async function fetchProfileByUid(uid: string): Promise<UserProfile> {
   const userDoc = await getDoc(userDocRef)
   const parsedData = userProfileSchema.parse(userDoc.data())
   return parsedData
+}
+
+export async function updateDp(uid: string, fileId: string) {
+  const userRef = doc(firestore, "users", uid)
+  await updateDoc(userRef, {
+    profilePicture: fileId,
+  })
 }

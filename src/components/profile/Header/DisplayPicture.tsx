@@ -1,7 +1,9 @@
 import { use } from "react"
+
 import DisplayPicture from "@components/DisplayPicture"
 import UpdatableDisplayPicture from "@components/DisplayPicture/Updatable"
 import { ProfileViewContext } from "@contexts/Profile/View"
+import createFile from "@appwriteStorage/create"
 
 function ProfileDisplayPicture() {
   const {
@@ -11,8 +13,9 @@ function ProfileDisplayPicture() {
   if (!profileDetails) return
 
   if (isUserProfile) {
-    const handleDPChange = (file: File) => {
-      console.log(file)
+    const handleDPChange = async (file: File) => {
+      const fileId = await createFile(file)
+      console.log(fileId.$id)
     }
 
     return (

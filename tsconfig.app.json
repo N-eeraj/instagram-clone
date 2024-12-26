@@ -30,6 +30,7 @@
       "@hooks/*": ["./src/hooks/*"],
       "@contexts/*": ["./src/contexts/*"],
       "@firebaseApp/*": ["./src/libs/firebase/*"],
+      "@appwriteStorage/*": ["./src/libs/appwrite/*"],
       "@schemas/*": ["./src/schemas/*"],
       "@customTypes/*": ["./src/types/*"],
     }

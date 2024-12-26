@@ -1,6 +1,6 @@
 import { use } from "react"
 import Button from "@components/ui/Button"
-import { ProfileViewContext } from "@contexts/ProfileView"
+import { ProfileViewContext } from "@contexts/Profile/View"
 
 function ProfileActions() {
   const {

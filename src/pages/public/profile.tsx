@@ -1,5 +1,5 @@
 import ProfileHeader from "@components/profile/Header"
-import ProfileViewContextProvider from "@contexts/ProfileView"
+import ProfileViewContextProvider from "@contexts/Profile/View"
 
 function Profile() {
   return (

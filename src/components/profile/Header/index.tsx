@@ -3,7 +3,7 @@ import DisplayPicture from "@components/profile/Header/DisplayPicture"
 import UserProfileActions from "@components/profile/Header/Actions/User"
 import ExternalProfileActions from "@components/profile/Header/Actions/External"
 import ProfileOverview from "@components/profile/Header/Overview"
-import { ProfileViewContext } from "@contexts/ProfileView"
+import { ProfileViewContext } from "@contexts/Profile/View"
 
 function ProfileHeader() {
   const {

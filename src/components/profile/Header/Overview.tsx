@@ -1,6 +1,6 @@
 import { use } from "react"
 import { Link } from "react-router"
-import { ProfileViewContext } from "@contexts/ProfileView"
+import { ProfileViewContext } from "@contexts/Profile/View"
 import clsx from "clsx"
 
 function ProfileOverview({ className }: { className?: string }) {

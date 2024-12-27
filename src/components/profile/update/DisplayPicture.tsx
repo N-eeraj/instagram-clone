@@ -18,12 +18,15 @@ function ProfileUpdateDP() {
   } = use(UserContext)
   if (!(authUser && userProfile)) return
 
+  const [dp, setDp] = useState<string | undefined>(userProfile.displayPicture)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleFileChange = (file: File) => {
+  const handleFileChange = (file: File, url: string) => {
+    setDp(url)
   }
 
   const handleFileRemoval = async () => {
+    setDp(undefined)
     if (userProfile.profilePicture) {
       setIsLoading(true)
       await deleteDP(authUser.uid)
@@ -40,7 +43,7 @@ function ProfileUpdateDP() {
   return (
     <div className="grid place-content-center place-items-center gap-y-4">
       <UpdatableDisplayPicture
-        displayPicture={userProfile.displayPicture}
+        displayPicture={dp}
         userName={userProfile.userName}
         onChange={handleFileChange} />
 

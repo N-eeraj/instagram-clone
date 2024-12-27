@@ -33,6 +33,7 @@ function ProfileUpdateDP() {
         displayPicture={dpUrl}
         userName={userProfile.userName}
         loading={isLoading}
+        className="md:!size-20"
         onChange={handleFileChange} />
 
       { dpUrl ?

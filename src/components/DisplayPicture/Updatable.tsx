@@ -10,10 +10,11 @@ import clsx from "clsx"
 
 type DisplayPictureProps = DisplayPictureType & {
   loading?: boolean
+  className?: string
   onChange: (_file:  File, _url: string) => any
 }
 
-function UpdatableDisplayPicture({ displayPicture, userName, loading, onChange }: DisplayPictureProps) {
+function UpdatableDisplayPicture({ displayPicture, userName, loading, className, onChange }: DisplayPictureProps) {
   const inputId = useId()
   const [tempDp, setTempDp] = useState<string | null>(null)
 
@@ -45,6 +46,7 @@ function UpdatableDisplayPicture({ displayPicture, userName, loading, onChange }
         displayPicture={(loading && tempDp) ? tempDp : displayPicture}
         userName={userName}
         className={clsx(
+          className,
           loading && "brightness-50",
         )} />
 

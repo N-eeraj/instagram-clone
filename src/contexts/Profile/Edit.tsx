@@ -84,6 +84,7 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
     setIsLoading(true)
     // await handleFileRemoval()
     // await handleFileUpdate()
+    console.log(formState)
     setIsLoading(false)
   }
 

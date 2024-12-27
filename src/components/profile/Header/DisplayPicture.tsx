@@ -8,9 +8,10 @@ import UpdatableDisplayPicture from "@components/DisplayPicture/Updatable"
 import { UserContext } from "@contexts/User"
 import { ProfileViewContext } from "@contexts/Profile/View"
 
-import createFile from "@appwriteStorage/create"
 import { updateDp } from "@firebaseApp/store"
-import readFile from "@/libs/appwrite/read"
+import createFile from "@appwriteStorage/create"
+import readFile from "@appwriteStorage/read"
+import removeFile from "@appwriteStorage/delete"
 
 function ProfileDisplayPicture() {
   const {
@@ -43,6 +44,9 @@ function ProfileDisplayPicture() {
         displayPicture: url,
       })
       setIsLoading(false)
+      if (profileDetails.profilePicture) {
+        removeFile(profileDetails.profilePicture)
+      }
     }
 
     return (

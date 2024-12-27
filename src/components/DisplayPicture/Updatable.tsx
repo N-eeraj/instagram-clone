@@ -10,7 +10,7 @@ import clsx from "clsx"
 
 type DisplayPictureProps = DisplayPictureType & {
   loading?: boolean
-  onChange: (_file:  File) => any
+  onChange: (_file:  File, _url: string) => any
 }
 
 function UpdatableDisplayPicture({ displayPicture, userName, loading, onChange }: DisplayPictureProps) {
@@ -21,8 +21,9 @@ function UpdatableDisplayPicture({ displayPicture, userName, loading, onChange }
     const files = target.files
     if (files && files.length) {
       const file = files[0]
-      setTempDp(URL.createObjectURL(file))
-      onChange(file)
+      const tempUrl = URL.createObjectURL(file)
+      setTempDp(tempUrl)
+      onChange(file, tempUrl)
     }
   }
 

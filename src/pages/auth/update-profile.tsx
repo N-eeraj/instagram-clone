@@ -5,7 +5,7 @@ import ProfileEditContextProvider from "@contexts/Profile/Edit"
 
 function UpdateProfile() {
   return (
-    <section className="flex flex-col gap-y-4 max-w-xl md:mx-auto">
+    <section className="flex flex-col gap-y-4 max-w-lg md:mx-auto">
       <ProfileEditContextProvider>
         <ProfileUpdateHeader />
         <ProfileUpdateDP />

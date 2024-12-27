@@ -17,6 +17,7 @@ export interface ProfileEditContextType extends Pick<UserProfile, UpdatableField
   isLoading: boolean,
   setDpFile: (_args: File | null) => void
   setDpUrl: (_args: string | undefined) => void
+  getInput: (_args: UpdatableFields) => string
   setInput: (_args: FormInputDispatch) => void
   updateProfile: () => void
 }

@@ -9,13 +9,15 @@ import type { UpdatableFields } from "@customTypes/user/edit"
 
 export interface UpdateFormInputProps {
   title: string
-  value: string | undefined
   inputField: UpdatableFields
   description?: string
 }
 
-function ProfileUpdateInput({ title, value, inputField, description }: UpdateFormInputProps) {
-  const { setInput } = use(ProfileEditContext)
+function ProfileUpdateInput({ title, inputField, description }: UpdateFormInputProps) {
+  const {
+    getInput,
+    setInput,
+  } = use(ProfileEditContext)
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setInput({
@@ -31,10 +33,10 @@ function ProfileUpdateInput({ title, value, inputField, description }: UpdateFor
       </strong>
       <div className="flex-1 flex flex-col gap-y-2">
         <Input
-          value={value}
+          value={getInput(inputField)}
           className="w-full"
           onChange={handleChange} />
-        <p className="hidden md:block">
+        <p className="hidden md:block text-sm">
           {description}
         </p>
       </div>

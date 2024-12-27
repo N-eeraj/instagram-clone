@@ -8,6 +8,7 @@ import {
 } from "react"
 
 import { UserContext } from "@contexts/User"
+import useUpdateDp from "@hooks/useUpdateDp"
 import removeFile from "@appwriteStorage/delete"
 import { deleteDP } from "@firebaseApp/store"
 
@@ -15,6 +16,7 @@ import type {
   FormInputValues,
   FormInputDispatch,
   ProfileEditContextType,
+  UpdatableFields,
 } from "@customTypes/user/edit"
 
 const formInitialValue: FormInputValues = {
@@ -51,6 +53,7 @@ export const ProfileEditContext = createContext<ProfileEditContextType>({
   ...formInitialValue,
   setDpFile: (_args: File | null) => {},
   setDpUrl: (_args: string | undefined) => {},
+  getInput: (_args: UpdatableFields) => "",
   setInput: (_args: FormInputDispatch) => {},
   updateProfile: () => {},
 })
@@ -65,10 +68,14 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
     authUser,
     userProfile,
   } = use(UserContext)
-  if (!authUser) return
+  if (!(authUser && userProfile)) return
+
+  const { updateDpHandler } = useUpdateDp()
+
+  const getInput = (field: UpdatableFields) => formState[field] ?? ""
 
   const handleFileRemoval = async () => {
-    if (userProfile?.profilePicture) {
+    if (userProfile.profilePicture && userProfile?.displayPicture !== dpUrl) {
       await deleteDP(authUser.uid)
       await removeFile(userProfile.profilePicture)
     }
@@ -76,14 +83,14 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
 
   const handleFileUpdate = async () => {
     if (dpFile) {
-      console.log("create file", dpFile)
+      await updateDpHandler!(dpFile)
     }
   }
 
   const updateProfile = async () => {
     setIsLoading(true)
-    // await handleFileRemoval()
-    // await handleFileUpdate()
+    await handleFileRemoval()
+    await handleFileUpdate()
     console.log(formState)
     setIsLoading(false)
   }
@@ -105,6 +112,7 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
     ...formState,
     setDpUrl,
     setDpFile,
+    getInput,
     setInput: formDispatch,
     updateProfile,
   }

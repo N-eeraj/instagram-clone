@@ -21,8 +21,12 @@ function ProfileUpdateHeader() {
   }
 
   const handleUpdate = async () => {
-    await updateProfile()
-    goBack()
+    try {
+      await updateProfile()
+      goBack()
+    } catch(error) {
+      console.error(error)
+    }
   }
 
   const invalidPassword = Boolean((password as string).length && (password as string).length < 6)

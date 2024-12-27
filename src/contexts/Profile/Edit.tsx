@@ -59,17 +59,20 @@ export const ProfileEditContext = createContext<ProfileEditContextType>({
   dpUrl: undefined,
   isLoading: false,
   ...formInitialValue,
+  reAuthenticate: false,
   setDpFile: (_args: File | null) => {},
   setDpUrl: (_args: string | undefined) => {},
   getInput: (_args: UpdatableFields) => "",
   setInput: (_args: FormInputDispatch) => {},
   updateProfile: () => {},
+  setReAuthenticate: (_args: boolean) => {},
 })
 
 function ProfileEditContextProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState(false)
   const [dpFile, setDpFile] = useState<File | null>(null)
   const [dpUrl, setDpUrl] = useState<string | undefined>(undefined)
+  const [reAuthenticate, setReAuthenticate] = useState(false)
   const [formState, formDispatch] = useReducer(formInputReducer, formInitialValue)
 
   const {
@@ -84,11 +87,24 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
   const getInput = (field: UpdatableFields) => formState[field] ?? ""
 
   const handleUpdatePassword = async (password: string) => {
-    if (!password) return
-    if (password.length < 6) {
-      throw "Create a password that is at least 6 characters in length."
+    try {
+      if (!password) return
+      if (password.length < 6) {
+        throw "Create a password that is at least 6 characters in length."
+      }
+      await handlePasswordUpdate(password)
+    } catch (error) {
+      if (error instanceof Object && "code" in error) {
+        console.error(error.code)
+        if (error.code === "auth/requires-recent-login") {
+          await new Promise(resolve => {
+            setReAuthenticate(true)
+          })
+        } else {
+          throw "Something went wrong."
+        }
+      }
     }
-    await handlePasswordUpdate(password)
   }
 
   const handleFormUpdate = async () => {
@@ -129,6 +145,7 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
       toast.success("Updated Profile")
     } catch (error) {
       toast.error(error as string)
+      throw error
     } finally {
       setIsLoading(false)
     }
@@ -144,16 +161,24 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
     }
   }, [userProfile])
 
+  useEffect(() => {
+    if (!reAuthenticate) {
+      setIsLoading(false)
+    }
+  }, [reAuthenticate])
+
   const contextValues = {
     dpFile,
     dpUrl,
     isLoading,
     ...formState,
+    reAuthenticate,
     setDpUrl,
     setDpFile,
     getInput,
     setInput: formDispatch,
     updateProfile,
+    setReAuthenticate,
   }
 
   return (

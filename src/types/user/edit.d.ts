@@ -15,11 +15,13 @@ export interface ProfileEditContextType extends Pick<UserProfile, UpdatableField
   dpFile: File | null
   dpUrl: string | undefined
   isLoading: boolean,
+  reAuthenticate: boolean,
   setDpFile: (_args: File | null) => void
   setDpUrl: (_args: string | undefined) => void
   getInput: (_args: UpdatableFields) => string
   setInput: (_args: FormInputDispatch) => void
   updateProfile: () => void
+  setReAuthenticate: (_args: boolean) => void
 }
 
 export type FormInputValues = Record<UpdatableFields, string>

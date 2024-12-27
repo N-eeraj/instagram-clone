@@ -36,12 +36,16 @@ function Input({ type, placeholder, errors, showValidityIcon = false, filled, pl
   }
 
   return (
-    <div className={className}>
+    <div className={clsx(
+      className,
+      inputProps.disabled && "opacity-60 cursor-not-allowed",
+    )}>
       <div className={clsx(
         "relative flex items-center w-full h-9 pr-2 rounded-sm text-primary-text",
         filled ? "bg-white/5" : "bg-secondary outline",
         errors ? "outline-red-500" : "outline-separator-light",
-        prepend && "pl-2"
+        prepend && "pl-2",
+        inputProps.disabled && "cursor-not-allowed",
       )}>
         {prepend && prepend}
         <div className={clsx(
@@ -62,7 +66,7 @@ function Input({ type, placeholder, errors, showValidityIcon = false, filled, pl
             {...inputProps}
             type={currentType}
             className={clsx(
-              "bg-transparent text-xs outline-none truncate z-10",
+              "bg-transparent text-xs outline-none truncate disabled:cursor-not-allowed z-10",
               (value && placeholderLabel && placeholder) ? "grow-0" : "flex-1",
             )}
             onChange={handleChange} />

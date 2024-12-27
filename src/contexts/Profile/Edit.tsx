@@ -97,7 +97,7 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
       if (error instanceof Object && "code" in error) {
         console.error(error.code)
         if (error.code === "auth/requires-recent-login") {
-          await new Promise(resolve => {
+          await new Promise(() => {
             setReAuthenticate(true)
           })
         } else {

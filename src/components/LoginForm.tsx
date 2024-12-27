@@ -6,9 +6,12 @@ import {
 import ControlledInput from "@components/ui/Input/Controlled"
 import Button from "@components/ui/Button"
 import Error from "@components/ui/Error"
-import type { LoginFormData } from "@customTypes/auth"
+import type {
+  LoginFormData,
+  LoginFormProps,
+} from "@customTypes/auth"
 
-function LoginForm({ onSubmit }: { onSubmit: Function }) {
+function LoginForm({ email, onSubmit }: LoginFormProps) {
   const {
     handleSubmit,
     control,
@@ -16,7 +19,7 @@ function LoginForm({ onSubmit }: { onSubmit: Function }) {
     setError,
   } = useForm<LoginFormData>({
     defaultValues: {
-      email: "",
+      email: email ?? "",
       password: "",
     },
   })
@@ -41,6 +44,7 @@ function LoginForm({ onSubmit }: { onSubmit: Function }) {
         inputProps={{
           type: "email",
           placeholder: "Email address",
+          disabled: !!email,
           placeholderLabel: true,
           errors: errors.email
         }} />
@@ -66,7 +70,7 @@ function LoginForm({ onSubmit }: { onSubmit: Function }) {
           disabled={!isValid}
           loading={isSubmitting}
           className="mt-2">
-          Login
+          {email ? "Continue" : "Login"}
         </Button>
 
         <Error errors={errors.root} />

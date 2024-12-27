@@ -6,7 +6,6 @@ import { handleSignIn } from "@firebaseApp/auth"
 import { Icon } from "@iconify/react"
 
 function Login() {
-
   return (
     <main className="grid justify-items-center items-center lg:items-start min-h-screen max-lg:py-11 bg-black text-primary-text">
       <article className="flex justify-between lg:justify-center lg:gap-x-8 w-full max-w-3xl max-lg:h-full lg:mt-16">

@@ -6,4 +6,9 @@ export interface LoginFormData {
   password: string
 }
 
+export interface LoginFormProps {
+  email?: string | null
+  onSubmit: Function
+}
+
 export type RegisterFormData = z.infer<typeof registerFormSchema>

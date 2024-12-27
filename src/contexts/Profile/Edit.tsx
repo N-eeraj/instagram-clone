@@ -10,7 +10,10 @@ import {
 import { UserContext } from "@contexts/User"
 import useUpdateDp from "@hooks/useUpdateDp"
 import removeFile from "@appwriteStorage/delete"
-import { deleteDP } from "@firebaseApp/store"
+import {
+  deleteDP,
+  updateUserProfile,
+} from "@firebaseApp/store"
 
 import type {
   FormInputValues,
@@ -67,12 +70,28 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
   const {
     authUser,
     userProfile,
+    setUserProfile,
   } = use(UserContext)
   if (!(authUser && userProfile)) return
 
   const { updateDpHandler } = useUpdateDp()
 
   const getInput = (field: UpdatableFields) => formState[field] ?? ""
+
+  const handleFormUpdate = async () => {
+    const formData: Partial<FormInputValues> = {...formState}
+    if (userProfile.userName === formState.userName) {
+      delete formData.userName
+    }
+    await updateUserProfile({
+      uid: authUser.uid,
+      ...formData,
+    })
+    setUserProfile({
+      ...userProfile,
+      ...formData,
+    })
+  }
 
   const handleFileRemoval = async () => {
     if (userProfile.profilePicture && userProfile?.displayPicture !== dpUrl) {
@@ -89,10 +108,15 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
 
   const updateProfile = async () => {
     setIsLoading(true)
-    await handleFileRemoval()
-    await handleFileUpdate()
-    console.log(formState)
-    setIsLoading(false)
+    try {
+      await handleFormUpdate()
+      // await handleFileRemoval()
+      // await handleFileUpdate()
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {

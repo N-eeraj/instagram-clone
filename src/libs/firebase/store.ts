@@ -14,6 +14,7 @@ import {
 import app from  "@firebaseApp/init"
 
 import { userProfileSchema } from "@schemas/user"
+import type{ User } from "firebase/auth"
 import type { UserProfile } from "@customTypes/user"
 
 const firestore = getFirestore(app)
@@ -56,4 +57,16 @@ export async function deleteDP(uid: string) {
   await updateDoc(userRef, {
     profilePicture: deleteField(),
   })
+}
+
+type UpdateProfileArgs = Partial<Pick<UserProfile, "userName" | "fullName" | "bio">> & Pick<User, "uid">
+export async function updateUserProfile({ uid, ...profileData }: UpdateProfileArgs) {
+  if (profileData.userName) {
+    const userNameExists = await isUsernameTaken(profileData.userName)
+    if (userNameExists) {
+      throw "This username isn't available. Please try another."
+    }
+  }
+  const userRef = doc(firestore, "users", uid)
+  await updateDoc(userRef, profileData)
 }

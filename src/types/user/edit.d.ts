@@ -12,9 +12,13 @@ type UpdatableFields = "userName" | "fullName" | "bio"
 export type FormInputDispatch = { action: UpdatableFields, value: string } | { action: "set", value: Pick<UserProfile, UpdatableFields> }
 
 export interface ProfileEditContextType extends Pick<UserProfile, UpdatableFields> {
-  dp: File | null
-  setDp: (_args: File | null) => void
+  dpFile: File | null
+  dpUrl: string | undefined
+  isLoading: boolean,
+  setDpFile: (_args: File | null) => void
+  setDpUrl: (_args: string | undefined) => void
   setInput: (_args: FormInputDispatch) => void
+  updateProfile: () => void
 }
 
 export type FormInputValues = Record<UpdatableFields, string>

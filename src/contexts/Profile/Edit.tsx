@@ -8,8 +8,10 @@ import {
 } from "react"
 
 import { UserContext } from "@contexts/User"
+import removeFile from "@appwriteStorage/delete"
+import { deleteDP } from "@firebaseApp/store"
+
 import type {
-  UpdatableFields,
   FormInputValues,
   FormInputDispatch,
   ProfileEditContextType,
@@ -43,17 +45,47 @@ const formInputReducer = (state: FormInputValues, { action, value }: FormInputDi
 }
 
 export const ProfileEditContext = createContext<ProfileEditContextType>({
-  dp: null,
+  dpFile: null,
+  dpUrl: undefined,
+  isLoading: false,
   ...formInitialValue,
-  setDp: (_args: File | null) => {},
+  setDpFile: (_args: File | null) => {},
+  setDpUrl: (_args: string | undefined) => {},
   setInput: (_args: FormInputDispatch) => {},
+  updateProfile: () => {},
 })
 
 function ProfileEditContextProvider({ children }: PropsWithChildren) {
-  const [dp, setDp] = useState<File | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [dpFile, setDpFile] = useState<File | null>(null)
+  const [dpUrl, setDpUrl] = useState<string | undefined>(undefined)
   const [formState, formDispatch] = useReducer(formInputReducer, formInitialValue)
 
-  const { userProfile } = use(UserContext)
+  const {
+    authUser,
+    userProfile,
+  } = use(UserContext)
+  if (!authUser) return
+
+  const handleFileRemoval = async () => {
+    if (userProfile?.profilePicture) {
+      await deleteDP(authUser.uid)
+      await removeFile(userProfile.profilePicture)
+    }
+  }
+
+  const handleFileUpdate = async () => {
+    if (dpFile) {
+      console.log("create file", dpFile)
+    }
+  }
+
+  const updateProfile = async () => {
+    setIsLoading(true)
+    // await handleFileRemoval()
+    // await handleFileUpdate()
+    setIsLoading(false)
+  }
 
   useEffect(() => {
     if (userProfile) {
@@ -61,14 +93,19 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
         action: "set",
         value: userProfile,
       })
+      setDpUrl(userProfile.displayPicture)
     }
   }, [userProfile])
 
   const contextValues = {
-    dp,
-    setDp,
+    dpFile,
+    dpUrl,
+    isLoading,
     ...formState,
+    setDpUrl,
+    setDpFile,
     setInput: formDispatch,
+    updateProfile,
   }
 
   return (

@@ -2,6 +2,8 @@ import {
   getAuth,
   signOut,
   updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth"
@@ -91,5 +93,29 @@ export async function handlePasswordUpdate(newPassword: string) {
   const user = auth.currentUser
   if (user) {
     await updatePassword(user, newPassword)
+  }
+}
+
+export async function handleReAuthenticate({ email, password }: LoginFormData) {
+  const user = auth.currentUser
+  if (user) { 
+    try {
+      const credential = EmailAuthProvider.credential(email, password)
+      await reauthenticateWithCredential(user, credential)
+    } catch(error: any) {
+      console.error(error.code)
+      switch(error.code) {
+        case "auth/invalid-email":
+          throw "Invalid email"
+        case "auth/invalid-credential":
+          throw "Invalid credentials! Please check your email & password"
+        case "auth/too-many-requests":
+          throw "Too many requests! Please try again later"
+        case "auth/network-request-failed":
+          throw "Network error! Please check your connection and try again"
+        default:
+          throw error.message
+      }
+    }
   }
 }

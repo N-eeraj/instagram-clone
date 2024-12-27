@@ -38,7 +38,7 @@ function UpdatableDisplayPicture({ displayPicture, userName, loading, className,
         type="file"
         hidden
         disabled={loading}
-        accept=".png, .jpeg, .webp, .heic, .avif"
+        accept=".png, .jpg, .jpeg, .webp, .heic, .avif"
         className="hidden"
         onChange={handleFileChange} />
 

@@ -17,7 +17,13 @@ function ProfileUpdateForm() {
     {
       title: "Bio",
       inputField:"bio",
-      description: "Provide your personal information, even if the account is used for a business, a pet or something else. This wont't be part of your public profile",
+      description: "Provide your personal information, even if the account is used for a business, a pet or something else. This wont't be part of your public profile.",
+    },
+    {
+      title: "Password",
+      type: "password",
+      inputField:"password",
+      description: "Use a secure password.",
     },
   ]
 

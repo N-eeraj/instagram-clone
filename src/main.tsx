@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router/dom"
 
 import router from "@/router"
 import UserContextProvider from "@contexts/User"
+import { Toaster } from "sonner"
 
 import "@/index.css"
 
@@ -12,5 +13,6 @@ createRoot(document.getElementById("root")!).render(
     <UserContextProvider>
       <RouterProvider router={router} />
     </UserContextProvider>
+    <Toaster richColors />
   </StrictMode>,
 )

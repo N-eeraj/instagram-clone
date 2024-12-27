@@ -9,6 +9,7 @@ function ProfileUpdateHeader() {
   const { userProfile } = use(UserContext)
   const {
     isLoading,
+    password,
     updateProfile,
   } = use(ProfileEditContext)
   if (!userProfile) return
@@ -21,14 +22,16 @@ function ProfileUpdateHeader() {
 
   const handleUpdate = async () => {
     await updateProfile()
-    // goBack()
+    goBack()
   }
+
+  const invalidPassword = Boolean((password as string).length && (password as string).length < 6)
 
   return (
     <header className="flex justify-between items-center">
       <button
         disabled={isLoading}
-        className="flex-1 text-start disabled:opacity-60"
+        className="flex-1 text-start disabled:opacity-60 disabled:cursor-not-allowed"
         onClick={goBack}>
         Cancel
       </button>
@@ -36,8 +39,8 @@ function ProfileUpdateHeader() {
         Update Profile
       </h1>
       <button
-        disabled={isLoading}
-        className="flex-1 flex justify-end text-primary-button font-semibold"
+        disabled={isLoading || invalidPassword}
+        className="flex-1 flex justify-end text-primary-button font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
         onClick={handleUpdate}>
         {isLoading ?
           <Icon

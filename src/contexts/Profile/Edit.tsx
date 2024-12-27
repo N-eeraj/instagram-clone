@@ -14,6 +14,8 @@ import {
   deleteDP,
   updateUserProfile,
 } from "@firebaseApp/store"
+import { handlePasswordUpdate } from "@firebaseApp/auth"
+import { toast } from "sonner"
 
 import type {
   FormInputValues,
@@ -26,6 +28,7 @@ const formInitialValue: FormInputValues = {
   fullName: "",
   userName: "",
   bio: "",
+  password: "",
 }
 
 const formInputReducer = (state: FormInputValues, { action, value }: FormInputDispatch): FormInputValues => {
@@ -33,6 +36,7 @@ const formInputReducer = (state: FormInputValues, { action, value }: FormInputDi
     case "bio":
     case "fullName":
     case "userName":
+    case "password":
       return {
         ...state,
         [action]: value
@@ -42,6 +46,7 @@ const formInputReducer = (state: FormInputValues, { action, value }: FormInputDi
         bio: value.bio ?? "",
         fullName: value.fullName,
         userName: value.userName,
+        password: "",
       }
     default:
       console.warn(`Invalid action: ${action}`)
@@ -78,11 +83,20 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
 
   const getInput = (field: UpdatableFields) => formState[field] ?? ""
 
+  const handleUpdatePassword = async (password: string) => {
+    if (!password) return
+    if (password.length < 6) {
+      throw "Create a password that is at least 6 characters in length."
+    }
+    await handlePasswordUpdate(password)
+  }
+
   const handleFormUpdate = async () => {
-    const formData: Partial<FormInputValues> = {...formState}
+    const { password, ...formData }: Partial<FormInputValues> = {...formState}
     if (userProfile.userName === formState.userName) {
       delete formData.userName
     }
+    await handleUpdatePassword(password)
     await updateUserProfile({
       uid: authUser.uid,
       ...formData,
@@ -110,10 +124,11 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
     setIsLoading(true)
     try {
       await handleFormUpdate()
-      // await handleFileRemoval()
-      // await handleFileUpdate()
+      await handleFileRemoval()
+      await handleFileUpdate()
+      toast.success("Updated Profile")
     } catch (error) {
-      console.error(error)
+      toast.error(error as string)
     } finally {
       setIsLoading(false)
     }

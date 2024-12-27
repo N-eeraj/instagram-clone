@@ -7,9 +7,9 @@ import type {
   UserProfile,
 } from "@customTypes/user"
 
-type UpdatableFields = "userName" | "fullName" | "bio"
+type UpdatableFields = "userName" | "fullName" | "bio" | "password"
 
-export type FormInputDispatch = { action: UpdatableFields, value: string } | { action: "set", value: Pick<UserProfile, UpdatableFields> }
+export type FormInputDispatch = { action: UpdatableFields, value: string } | { action: "set", value: Pick<UserProfile, Omit<UpdatableFields | "password">> }
 
 export interface ProfileEditContextType extends Pick<UserProfile, UpdatableFields> {
   dpFile: File | null

@@ -12,4 +12,5 @@
 - [Iconify React](https://iconify.design/docs/icon-components/react/)
 - [clsx](https://github.com/lukeed/clsx)
 - [use-debounce](https://github.com/xnimorz/use-debounce)
+- [Sonner](https://sonner.emilkowal.ski/)
 - [Storybook](https://storybook.js.org/)

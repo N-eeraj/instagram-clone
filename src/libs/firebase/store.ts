@@ -8,6 +8,7 @@ import {
   getDocs,
   updateDoc,
   collection,
+  deleteField,
   getFirestore,
 } from "firebase/firestore"
 import app from  "@firebaseApp/init"
@@ -47,5 +48,12 @@ export async function updateDp(uid: string, fileId: string) {
   const userRef = doc(firestore, "users", uid)
   await updateDoc(userRef, {
     profilePicture: fileId,
+  })
+}
+
+export async function deleteDP(uid: string) {
+  const userRef = doc(firestore, "users", uid)
+  await updateDoc(userRef, {
+    profilePicture: deleteField(),
   })
 }

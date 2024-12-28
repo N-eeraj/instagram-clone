@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 
-import LoginForm from "@components/LoginForm"
+import LoginForm from "@components/auth/LoginForm"
 
 import { handleSignIn } from "@firebaseApp/auth"
 import { Icon } from "@iconify/react"

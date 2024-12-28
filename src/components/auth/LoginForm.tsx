@@ -23,7 +23,7 @@ function LoginForm({ email, onSubmit }: LoginFormProps) {
       password: "",
     },
   })
-  
+
   const handleLoginSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       await onSubmit(data)

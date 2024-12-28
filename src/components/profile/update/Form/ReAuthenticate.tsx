@@ -1,6 +1,6 @@
 import { use } from "react"
 import Modal from "@components/ui/Modal"
-import LoginForm from "@components/LoginForm"
+import LoginForm from "@components/auth/LoginForm"
 import { ProfileEditContext } from "@contexts/Profile/Edit"
 import { UserContext } from "@contexts/User"
 

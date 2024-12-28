@@ -23,7 +23,7 @@ function ActionHeader({ title, action, canceled }: ActionHeaderProps) {
         disabled={canceled.disabled}
         className="flex-1 text-start disabled:opacity-60 disabled:cursor-not-allowed"
         onClick={canceled.onClick}>
-        {canceled.text ?? "Canceled"}
+        {canceled.text ?? "Cancel"}
       </button>
       {title && (
         <h1 className="flex-2 text-lg text-white text-center font-medium">

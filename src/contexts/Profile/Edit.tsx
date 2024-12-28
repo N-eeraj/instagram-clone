@@ -12,6 +12,7 @@ import useUpdateDp from "@hooks/useUpdateDp"
 import removeFile from "@appwriteStorage/delete"
 import {
   deleteDP,
+  isUsernameTaken,
   updateUserProfile,
 } from "@firebaseApp/store"
 import { handlePasswordUpdate } from "@firebaseApp/auth"
@@ -86,6 +87,13 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
 
   const getInput = (field: UpdatableFields) => formState[field] ?? ""
 
+  const checkUserNameTaken = async (userName: string) => {
+    const userNameExists = await isUsernameTaken(userName)
+    if (userNameExists) {
+      throw "This username isn't available. Please try another."
+    }
+  }
+
   const handleUpdatePassword = async (password: string) => {
     try {
       if (!password) return
@@ -111,6 +119,8 @@ function ProfileEditContextProvider({ children }: PropsWithChildren) {
     const { password, ...formData }: Partial<FormInputValues> = {...formState}
     if (userProfile.userName === formState.userName) {
       delete formData.userName
+    } else if (formData.userName) {
+      await checkUserNameTaken(formData.userName)
     }
     await handleUpdatePassword(password)
     await updateUserProfile({

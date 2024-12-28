@@ -33,8 +33,8 @@ const preview: Preview = {
   decorators: [
     (story) => (
       <div style={{
-        display: "grid",
-        placeContent: "center",
+        display: "flex",
+        justifyContent: "center",
       }}>
         {story()}
       </div>

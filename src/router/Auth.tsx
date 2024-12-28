@@ -2,6 +2,7 @@ import AuthLayout from "@layouts/Auth"
 
 import Home from "@pages/auth/home"
 import UpdateProfile from "@pages/auth/update-profile"
+import NewPost from "@pages/auth/new-post.tsx"
 
 const authRoutes = [
   {
@@ -15,6 +16,10 @@ const authRoutes = [
       {
         path: "update-profile",
         element: <UpdateProfile />,
+      },
+      {
+        path: "new-post",
+        element: <NewPost />,
       },
       {
         path: ":userName/followers",

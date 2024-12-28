@@ -61,12 +61,6 @@ export async function deleteDP(uid: string) {
 
 type UpdateProfileArgs = Partial<Pick<UserProfile, "userName" | "fullName" | "bio">> & Pick<User, "uid">
 export async function updateUserProfile({ uid, ...profileData }: UpdateProfileArgs) {
-  if (profileData.userName) {
-    const userNameExists = await isUsernameTaken(profileData.userName)
-    if (userNameExists) {
-      throw "This username isn't available. Please try another."
-    }
-  }
   const userRef = doc(firestore, "users", uid)
   await updateDoc(userRef, profileData)
 }

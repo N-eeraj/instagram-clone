@@ -1,8 +1,8 @@
 import {
   useState,
-  ComponentProps,
-  ChangeEvent,
-  ReactElement,
+  type ComponentProps,
+  type ChangeEvent,
+  type ReactElement,
 } from "react"
 import Error from "@components/ui/Error"
 
@@ -41,7 +41,7 @@ function Input({ type, placeholder, errors, showValidityIcon = false, filled, pl
       inputProps.disabled && "opacity-60 cursor-not-allowed",
     )}>
       <div className={clsx(
-        "relative flex items-center w-full h-9 pr-2 rounded-sm text-primary-text",
+        "relative flex items-center w-full h-9 pr-2 text-primary-text rounded-sm",
         filled ? "bg-white/5" : "bg-secondary outline",
         errors ? "outline-red-500" : "outline-separator-light",
         prepend && "pl-2",

@@ -5,9 +5,10 @@ import type {
 import { fn } from "@storybook/test"
 
 import ActionHeader from "./index"
+import { Icon } from "@iconify/react"
 
 const meta: Meta<typeof ActionHeader> = {
-  title: "UI/ActionHeader",
+  title: "ActionHeader",
   component: ActionHeader,
   args: {
     action: {
@@ -40,6 +41,28 @@ export const ButtonTexts: Story = {
     },
     canceled: {
       text: "Canceled Button",
+      onClick: fn(),
+    },
+  },
+}
+
+export const IconText: Story = {
+  args: {
+    action: {
+      text: (
+        <Icon
+          icon="material-symbols:check"
+          fontSize={24} />
+      ),
+      onClick: fn(),
+    },
+    canceled: {
+      text: (
+        <Icon
+          icon="material-symbols:arrow-left-alt-rounded"
+          fontSize={24}
+          className="text-white" />
+      ),
       onClick: fn(),
     },
   },

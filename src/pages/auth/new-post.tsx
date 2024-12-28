@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router"
 import ActionHeader from "@components/ui/ActionHeader"
+import { Icon } from "@iconify/react"
 
 function NewPost() {
   const navigate = useNavigate()
@@ -17,6 +18,11 @@ function NewPost() {
         onClick: handleCreatePost,
       }}
       canceled={{
+        text: (
+          <Icon
+            icon="material-symbols:arrow-left-alt-rounded"
+            fontSize={24} />
+        ),
         onClick: goBack,
       }} />
   )

@@ -1,4 +1,6 @@
 import {
+  useRef,
+  useState,
   useEffect,
   useCallback,
 } from "react"
@@ -18,6 +20,10 @@ interface SliderProps {
 
 function PostSlider({ mediaList, currentIndex, className, onChange }: SliderProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
+  const [currentInternalIndex, setCarouselIndex] = useState(0)
+
+  const videos = useRef<Array<HTMLVideoElement | null>>([])
+  const [playingVideo, setPlayingVideo] = useState<number | null>(null)
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
@@ -45,6 +51,55 @@ function PostSlider({ mediaList, currentIndex, className, onChange }: SliderProp
     }
   }, [currentIndex])
 
+  useEffect(() => {
+    emblaApi?.on("select", (emblaApi) => {
+      const selectedSlide = emblaApi.selectedScrollSnap()
+
+      const currentVideo = videos.current[selectedSlide]
+      if (currentVideo) {
+        currentVideo.play()
+        setPlayingVideo(selectedSlide)
+      }
+      else {
+        videos.current.forEach(video => {
+          if (video) {
+            video.pause()
+            video.currentTime = 0
+          }
+          setPlayingVideo(null)
+        })
+      }
+
+      if (onChange && currentIndex !== undefined) {
+        onChange(selectedSlide)
+      } else {
+        setCarouselIndex(selectedSlide)
+      }
+    })
+  }, [emblaApi])
+
+  const carouselIndex = currentIndex ?? currentInternalIndex
+
+  const handleVideoRef = (el: HTMLVideoElement | null, index: number) => {
+    videos.current[index] = el
+  }
+
+  const playVideo = (index: number) => {
+    const video = videos.current[index]
+    if (video) {
+      video.play()
+      setPlayingVideo(index)
+    }
+  }
+
+  const pauseVideo = (index: number) => {
+    const video = videos.current[index]
+    if (video) {
+      video.pause()
+      setPlayingVideo(null)
+    }
+  }
+
   return (
     <div
       ref={emblaRef}
@@ -60,21 +115,37 @@ function PostSlider({ mediaList, currentIndex, className, onChange }: SliderProp
         {mediaList.map(({ type, url }, index) => (
           <li
             key={index}
-            className="embla__slide">
+            className={clsx(
+              "relative grid items-center h-full",
+              "embla__slide",
+            )}>
             {type === "photo" ?
               <img
                 src={url}
                 alt={url}
-                className="size-full object-cover"
+                className="size-full object-contain"
               /> :
-              <video
-                src={url} />
+              <>
+                <video
+                  ref={(el) => handleVideoRef(el, index)}
+                  src={url}
+                  onClick={() => pauseVideo(index)} />
+                {playingVideo === null && (
+                  <div
+                    className="absolute top-1/2 left-1/2 grid place-content-center size-full bg-black/20 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                    onClick={() => playVideo(index)}>
+                    <Icon
+                      icon="material-symbols:play-arrow-rounded"
+                      fontSize={60} />
+                  </div>
+                )}
+              </>
             }
           </li>
         ))}
       </ul>
 
-      {currentIndex && (
+      {carouselIndex && (
         <button
           className="absolute top-1/2 left-2 p-1 bg-black/50 rounded-full backdrop-blur-sm -translate-y-1/2"
           onClick={scrollPrev}>
@@ -84,7 +155,7 @@ function PostSlider({ mediaList, currentIndex, className, onChange }: SliderProp
         </button>
       )}
 
-      {Number(currentIndex) < (mediaList.length - 1) && (
+      {carouselIndex < (mediaList.length - 1) && (
         <button
           className="absolute top-1/2 right-2 p-1 bg-black/50 rounded-full backdrop-blur-sm -translate-y-1/2"
           onClick={scrollNext}>

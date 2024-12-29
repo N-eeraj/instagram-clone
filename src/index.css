@@ -8,12 +8,15 @@ html {
 
 /* embla carousel styles */
 .embla {
-  overflow: hidden;
+  @apply overflow-hidden;
 }
 .embla__container {
-  display: flex;
+  @apply flex;
 }
 .embla__slide {
-  flex: 0 0 100%;
-  min-width: 0;
+  @apply flex-shrink-0 flex-grow-0 basis-full min-w-0;
+}
+
+.embla-next-prev {
+  @apply absolute top-1/2 p-1 bg-black/50 rounded-full backdrop-blur-sm -translate-y-1/2;
 }

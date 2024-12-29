@@ -24,6 +24,7 @@ function NewPostHeader() {
     <ActionHeader
       title="New Post"
       action={{
+        disabled: !files.length,
         onClick: handleCreatePost,
       }}
       canceled={{

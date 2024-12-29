@@ -6,7 +6,7 @@ import NewPostContextProvider from "@contexts/NewPost"
 
 function NewPost() {
   return (
-    <section className="grid md:grid-cols-2 md:grid-rows-[auto_80px_auto] md:gap-x-16 gap-y-4">
+    <section className="grid md:grid-cols-2 md:grid-rows-[auto_64px_auto] md:gap-x-16 gap-y-2 md:gap-y-4">
       <NewPostContextProvider>
         <NewPostHeader />
         <PostSlider />

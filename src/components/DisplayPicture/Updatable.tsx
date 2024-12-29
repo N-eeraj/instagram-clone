@@ -3,10 +3,12 @@ import {
   useState,
   type ChangeEvent,
 } from "react"
+
 import DisplayPicture from "@components/DisplayPicture"
 import { Icon } from "@iconify/react"
 import type { DisplayPictureType } from "@customTypes/user"
 import clsx from "clsx"
+import { imageExtensions } from "@/constants"
 
 type DisplayPictureProps = DisplayPictureType & {
   loading?: boolean
@@ -38,7 +40,7 @@ function UpdatableDisplayPicture({ displayPicture, userName, loading, className,
         type="file"
         hidden
         disabled={loading}
-        accept=".png, .jpg, .jpeg, .webp, .heic, .avif"
+        accept={imageExtensions.join(", ")}
         className="hidden"
         onChange={handleFileChange} />
 

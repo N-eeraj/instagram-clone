@@ -1,9 +1,6 @@
-enum MediaType {
-  PHOTO = "photo",
-  VIDEO = "video",
-}
+export type PostMediaType = "photo" | "video"
 
 export interface PostFile {
-  type: MediaType
+  type: PostMediaType
   url: string
 }

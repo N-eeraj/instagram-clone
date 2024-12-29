@@ -9,7 +9,7 @@ import { UserContext } from "@contexts/User"
 import { ProfileViewContext } from "@contexts/Profile/View"
 
 import useUpdateDp from "@hooks/useUpdateDp"
-import removeFile from "@appwriteStorage/delete"
+import { removeFile } from "@appwriteApp/storage"
 
 function ProfileDisplayPicture() {
   const {

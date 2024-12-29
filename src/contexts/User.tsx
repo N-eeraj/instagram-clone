@@ -6,8 +6,8 @@ import {
 } from "react"
 
 import { auth } from "@firebaseApp/auth"
-import { fetchProfileByUid } from "@firebaseApp/store"
-import readFile from "@appwriteStorage/read"
+import { fetchProfileByUid } from "@firebaseApp/firestore"
+import { readFile } from "@appwriteApp/storage"
 
 import type { User } from "firebase/auth"
 import type {

@@ -1,9 +1,11 @@
 import { use } from "react"
 import { UserContext } from "@contexts/User"
 
-import { updateDp } from "@firebaseApp/store"
-import createFile from "@appwriteStorage/create"
-import readFile from "@appwriteStorage/read"
+import { updateDp } from "@firebaseApp/firestore"
+import {
+  readFile,
+  createFile,
+} from "@appwriteApp/storage"
 
 export default function useUpdateDp() {
   const {

@@ -2,6 +2,8 @@ import clsx from "clsx"
 import type { PaginationProps } from "@customTypes/post/ui"
 
 function Pagination({ length, currentIndex, onChange }: PaginationProps) {
+  if (length < 2) return
+
   return (
     <ul className="absolute bottom-4 flex justify-center gap-x-2 w-full">
       {Array.from({ length }).map((_, index) => (

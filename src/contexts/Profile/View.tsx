@@ -11,8 +11,8 @@ import {
 } from "react-router"
 
 import { UserContext } from "@contexts/User"
-import { fetchProfileByUserName } from "@firebaseApp/store"
-import readFile from "@appwriteStorage/read"
+import { fetchProfileByUserName } from "@firebaseApp/firestore"
+import { readFile } from "@appwriteApp/storage"
 
 import type {
   UserProfile,

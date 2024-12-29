@@ -9,12 +9,12 @@ import {
 
 import { UserContext } from "@contexts/User"
 import useUpdateDp from "@hooks/useUpdateDp"
-import removeFile from "@appwriteStorage/delete"
+import { removeFile } from "@appwriteApp/storage"
 import {
   deleteDP,
   isUsernameTaken,
   updateUserProfile,
-} from "@firebaseApp/store"
+} from "@firebaseApp/firestore"
 import { handlePasswordUpdate } from "@firebaseApp/auth"
 import { toast } from "sonner"
 

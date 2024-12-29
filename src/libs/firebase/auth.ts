@@ -11,7 +11,7 @@ import {
 import {
   isUsernameTaken,
   addUserData,
-} from "@firebaseApp/store"
+} from "@firebaseApp/firestore"
 
 import {
   LoginFormData,

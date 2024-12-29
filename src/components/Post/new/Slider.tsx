@@ -9,6 +9,12 @@ function Slider() {
     setPreviewFileIndex,
   } = use(NewPostContext)
 
+  if (!files.length) {
+    return (
+      <div className="md:row-span-2" />
+    )
+  }
+
   return (
     <PostSlider
       mediaList={files}

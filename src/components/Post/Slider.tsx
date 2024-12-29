@@ -1,11 +1,9 @@
 import { useState } from "react"
 import clsx from "clsx"
+import { PostFile } from "@customTypes/post"
 
 interface SliderProps {
-  mediaList: {
-    url: string
-    type: "photo" | "video"
-  }[]
+  mediaList: PostFile[]
   className?: string
 }
 

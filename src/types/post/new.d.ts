@@ -1,11 +1,12 @@
-import { z } from "zod"
-import {
-  newPostSchema,
-  fileObjectSchema,
-} from "@schemas/newPost"
+import { PostFile } from "@customTypes/post"
 
-export interface NewPostContextType extends z.infer<typeof newPostSchema> {
-  files: PostFile[]
-  setFiles: (_args: File[]) => void
+export interface NewPostFile extends PostFile {
+  file: File
+}
+
+export interface NewPostContextType {
+  files: NewPostFile[]
+  caption: string
+  setFiles: (_args: NewPostFile[]) => void
   setCaption: (_args: string) => void
 }

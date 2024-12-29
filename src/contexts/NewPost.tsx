@@ -4,18 +4,19 @@ import {
   type PropsWithChildren,
 } from "react"
 import type {
+  NewPostFile,
   NewPostContextType,
 } from "@customTypes/post/new"
 
 export const NewPostContext = createContext<NewPostContextType>({
   files: [],
   caption: "",
-  setFiles: (_args: File[]) => {},
+  setFiles: (_args: NewPostFile[]) => {},
   setCaption: (_args: string) => {},
 })
 
 function NewPostContextProvider({ children }: PropsWithChildren) {
-  const [files, setFiles] = useState<File[]>([])
+  const [files, setFiles] = useState<NewPostFile[]>([])
   const [caption, setCaption] = useState("")
 
   const contextValues = {

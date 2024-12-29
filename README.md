@@ -12,5 +12,10 @@
 - [Iconify React](https://iconify.design/docs/icon-components/react/)
 - [clsx](https://github.com/lukeed/clsx)
 - [use-debounce](https://github.com/xnimorz/use-debounce)
+- [Swapy](https://swapy.tahazsh.com/)
 - [Sonner](https://sonner.emilkowal.ski/)
 - [Storybook](https://storybook.js.org/)
+
+
+#### To do
+- File selection Swapy **integration** is not smooth in touch devices

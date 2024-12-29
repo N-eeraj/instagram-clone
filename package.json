@@ -21,6 +21,7 @@
     "react-hook-form": "^7.53.2",
     "react-router": "^7.0.1",
     "sonner": "^1.7.1",
+    "swapy": "^1.0.3",
     "use-debounce": "^10.0.4",
     "zod": "^3.24.1"
   },

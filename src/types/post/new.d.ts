@@ -2,6 +2,7 @@ import { PostFile } from "@customTypes/post"
 
 export interface NewPostFile extends PostFile {
   file: File
+  id: string | number
 }
 
 export interface NewPostContextType {

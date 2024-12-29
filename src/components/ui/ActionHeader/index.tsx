@@ -3,6 +3,7 @@ import type {
   MouseEventHandler,
 } from "react"
 import { Icon } from "@iconify/react"
+import clsx from "clsx"
 
 interface ActionHeaderProps {
   title: string
@@ -17,11 +18,16 @@ interface ActionHeaderProps {
     disabled?: boolean
     onClick: MouseEventHandler
   }
+  className?: string
 }
 
-function ActionHeader({ title, action, canceled }: ActionHeaderProps) {
+function ActionHeader({ title, action, canceled, className }: ActionHeaderProps) {
   return (
-    <header className="flex justify-between items-center w-full">
+    <header
+      className={clsx(
+        "flex justify-between items-center w-full",
+        className,
+      )}>
       <button
         disabled={canceled.disabled}
         className="text-start disabled:opacity-60 disabled:cursor-not-allowed"

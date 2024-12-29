@@ -8,8 +8,13 @@ export const fileSchema = z.instanceof(File)
     message: "File too large.",
   })
 
+export const fileObjectSchema = z.object({
+  file: fileSchema,
+  type: z.enum(["photo", "video"]),
+})
+
 export const newPostSchema = z.object({
-  files: z.array(fileSchema)
+  files: z.array(fileObjectSchema)
     .min(1, {
       message: "Please select at least 1 image or video."
     }).max(10, {

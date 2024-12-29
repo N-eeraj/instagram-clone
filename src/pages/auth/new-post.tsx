@@ -1,30 +1,19 @@
-import { useNavigate } from "react-router"
-import ActionHeader from "@components/ui/ActionHeader"
-import { Icon } from "@iconify/react"
+import NewPostHeader from "@components/Post/new/Header"
+import PostSlider from "@components/Post/new/Slider"
+import FilesSelection from "@components/Post/new/FilesSelection"
+import Caption from "@components/Post/new/Caption"
+import NewPostContextProvider from "@contexts/NewPost"
 
 function NewPost() {
-  const navigate = useNavigate()
-
-  const goBack = () => {
-    navigate(-1)
-  }
-
-  const handleCreatePost = () => {}
-
   return (
-    <ActionHeader
-      title="New Post"
-      action={{
-        onClick: handleCreatePost,
-      }}
-      canceled={{
-        text: (
-          <Icon
-            icon="material-symbols:arrow-left-alt-rounded"
-            fontSize={24} />
-        ),
-        onClick: goBack,
-      }} />
+    <section className="grid md:grid-cols-2 md:grid-rows-[auto_80px_auto] md:gap-x-16 gap-y-4">
+      <NewPostContextProvider>
+        <NewPostHeader />
+        <PostSlider />
+        <FilesSelection />
+        <Caption />
+      </NewPostContextProvider>
+    </section>
   )
 }
 

@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react"
-import type { DisplayPictureType } from "@customTypes/user"
 import clsx from "clsx"
+import type { DisplayPictureType } from "@customTypes/user"
 
 function DisplayPicture({ displayPicture, userName, className }: DisplayPictureType & { className?: string }) {
   if (displayPicture) {

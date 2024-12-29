@@ -8,6 +8,8 @@ export interface NewPostFile extends PostFile {
 export interface NewPostContextType {
   files: NewPostFile[]
   caption: string
+  previewFileIndex: number
   setFiles: (_args: NewPostFile[]) => void
   setCaption: (_args: string) => void
+  setPreviewFileIndex: (_args: number) => void
 }

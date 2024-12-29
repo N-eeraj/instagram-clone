@@ -13,6 +13,7 @@
 - [clsx](https://github.com/lukeed/clsx)
 - [use-debounce](https://github.com/xnimorz/use-debounce)
 - [Swapy](https://swapy.tahazsh.com/)
+- [Embla Carousel](https://www.embla-carousel.com/)
 - [Sonner](https://sonner.emilkowal.ski/)
 - [Storybook](https://storybook.js.org/)
 

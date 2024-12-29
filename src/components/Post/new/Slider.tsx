@@ -3,12 +3,18 @@ import PostSlider from "@components/Post/Slider"
 import { NewPostContext } from "@contexts/NewPost"
 
 function Slider() {
-  const { files } = use(NewPostContext)
+  const {
+    files,
+    previewFileIndex,
+    setPreviewFileIndex,
+  } = use(NewPostContext)
 
   return (
     <PostSlider
       mediaList={files}
-      className="md:row-span-2" />
+      currentIndex={previewFileIndex}
+      className="md:row-span-2"
+      onChange={setPreviewFileIndex} />
   )
 }
 

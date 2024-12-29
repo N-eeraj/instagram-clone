@@ -28,6 +28,7 @@ function FilesSelection() {
   const {
     files,
     setFiles,
+    setPreviewFileIndex,
   } = use(NewPostContext)
 
   const containerRef = useRef<HTMLUListElement>(null)
@@ -105,12 +106,13 @@ function FilesSelection() {
             <div
               data-swapy-item={itemId}
               key={itemId}
-              className="size-full">
+              className="size-full cursor-pointer"
+              onClick={() => setPreviewFileIndex(index)}>
               {item.type === "photo" ?
                 <img
                   src={item.url}
                   alt={item.url}
-                  className="size-full object-cover object-center" /> :
+                  className="size-full object-contain object-center" /> :
                 <video
                   src={item.url}
                   className="size-full" />

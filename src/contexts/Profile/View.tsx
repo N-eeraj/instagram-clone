@@ -11,28 +11,33 @@ import {
 } from "react-router"
 
 import { UserContext } from "@contexts/User"
-import { fetchProfileByUserName } from "@firebaseApp/firestore"
+import { fetchProfileByUserName, fetchUserPosts } from "@firebaseApp/firestore"
 import { readFile } from "@appwriteApp/storage"
 
 import type {
   UserProfile,
   ProfileViewContextType,
 } from "@customTypes/user"
+import type { PostType } from "@customTypes/post"
 
 export const ProfileViewContext = createContext<ProfileViewContextType>({
   profileDetails: null,
   isUserProfile: false,
   isGuest: true,
+  profilePosts: [],
   setProfileDetails: (_args: UserProfile | null) => {},
 })
 
 function ProfileViewContextProvider({ children }: PropsWithChildren) {
   const [profileDetails, setProfileDetails] = useState<UserProfile | null>(null)
+  const [profilePosts, setProfilePosts] = useState<PostType[]>([])
   const { userName } = useParams()
   const navigate = useNavigate()
 
   const fetchUserProfile = async () => {
     const profileDetails = await fetchProfileByUserName(userName as string)
+    const profilePostsData = await fetchUserPosts(userName as string)
+    setProfilePosts(profilePostsData)
     if (!profileDetails) {
       return navigate("/profile-not-found", { replace: true })
     }
@@ -56,6 +61,7 @@ function ProfileViewContextProvider({ children }: PropsWithChildren) {
     profileDetails: profileDetails,
     isUserProfile,
     isGuest: !userProfile,
+    profilePosts,
     setProfileDetails,
   }
 

@@ -8,7 +8,8 @@ import { Icon } from "@iconify/react"
 function NewPostHeader() {
   const {
     files,
-    caption,
+    loading,
+    handleCreatePost,
   } = use(NewPostContext)
   const navigate = useNavigate()
 
@@ -16,15 +17,12 @@ function NewPostHeader() {
     navigate(-1)
   }
 
-  const handleCreatePost = () => {
-    console.log("create post with", { files, caption })
-  }
-
   return (
     <ActionHeader
       title="New Post"
       action={{
         disabled: !files.length,
+        loading,
         onClick: handleCreatePost,
       }}
       canceled={{
@@ -33,6 +31,7 @@ function NewPostHeader() {
             icon="material-symbols:arrow-left-alt-rounded"
             fontSize={24} />
         ),
+        disabled: loading,
         onClick: goBack,
       }}
       className="md:col-span-2" />

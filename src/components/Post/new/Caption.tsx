@@ -14,6 +14,7 @@ function Caption() {
       filled
       rows={6}
       placeholder="Write a caption"
+      className="max-h-36 md:max-h-72"
       onChange={({ target }) => setCaption(target.value)} />
   )
 }

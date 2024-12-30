@@ -13,12 +13,13 @@ export interface PostType {
 }
 
 export interface PostListItemType {
-  caption: string;
+  caption: string
   file: {
-      type: PostMediaType;
-      url: string;
-  };
-  id: string;
+    type: PostMediaType
+    url: string
+    hasMultiFiles: boolean
+  }
+  id: string
 }
 
 export interface PostFileObject {
@@ -28,5 +29,5 @@ export interface PostFileObject {
 
 export interface PostObjectType {
   caption: string
-  posts: PostFileObject[]
+  files: PostFileObject[]
 }

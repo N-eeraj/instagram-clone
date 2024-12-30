@@ -23,8 +23,10 @@ import type {
   UpdateProfileArgs,
 } from "@customTypes/user"
 import type {
-  PostListItemType,
+  PostType,
   PostObjectType,
+  PostFileObject,
+  PostListItemType,
 } from "@customTypes/post"
 import type { NewPostData } from "@customTypes/post/new"
 
@@ -84,14 +86,14 @@ export async function fetchUserPosts(userName: string): Promise<PostListItemType
   const userPosts = await getDocs(userPostQuery)
   const userPostsData = await Promise.all(userPosts.docs.map(async (doc) => {
     const {
-      posts,
+      files,
       caption,
     } = doc.data() as PostObjectType
 
     const {
       fileId,
       type,
-    } = posts[0]
+    } = files[0]
     const url = await readFile(fileId)
 
     return {
@@ -99,11 +101,27 @@ export async function fetchUserPosts(userName: string): Promise<PostListItemType
       file: {
         type,
         url,
+        hasMultiFiles: files.length > 1,
       },
       id: doc.id,
     }
   }))
   return userPostsData as PostListItemType[]
+}
+
+export async function fetchPostById(postId: string): Promise<PostType | void> {
+  const postDocRef = doc(collection(firestore, "posts"), postId)
+  const postDoc = await getDoc(postDocRef)
+  const postData = postDoc.data()
+  if (!postData) return
+  postData.files = await Promise.all(postData.files.map(async ({ type, fileId }: PostFileObject) => {
+    const url = await readFile(fileId)
+    return {
+      type,
+      url,
+    }
+  }))
+  return postData as PostType
 }
 
 export async function createUserPost({ uid, caption, files }: NewPostData) {
@@ -120,7 +138,7 @@ export async function createUserPost({ uid, caption, files }: NewPostData) {
   await setDoc(postsCollectionRef, {
     uid,
     caption,
-    posts: fileData,
+    files: fileData,
     createdAt: serverTimestamp(),
   })
 

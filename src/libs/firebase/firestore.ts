@@ -13,14 +13,18 @@ import {
 } from "firebase/firestore"
 import app from  "@firebaseApp/init"
 
-import { readFile } from "@appwriteApp/storage"
+import { createFile, readFile } from "@appwriteApp/storage"
 import { userProfileSchema } from "@schemas/user"
-import type { User } from "firebase/auth"
-import type { UserProfile } from "@customTypes/user"
+import type {
+  UserProfile,
+  UpdateProfileArgs,
+} from "@customTypes/user"
 import type {
   PostType,
-  PostMediaType,
+  PostFileObject,
+  PostObjectType,
 } from "@customTypes/post"
+import type { NewPostData } from "@customTypes/post/new"
 
 const firestore = getFirestore(app)
 
@@ -64,20 +68,11 @@ export async function deleteDP(uid: string) {
   })
 }
 
-type UpdateProfileArgs = Partial<Pick<UserProfile, "userName" | "fullName" | "bio">> & Pick<User, "uid">
 export async function updateUserProfile({ uid, ...profileData }: UpdateProfileArgs) {
   const userRef = doc(firestore, "users", uid)
   await updateDoc(userRef, profileData)
 }
 
-interface PostFileObject {
-  type: PostMediaType
-  fileId: string
-}
-interface PostObjectType {
-  caption: string
-  posts: PostFileObject[]
-}
 export async function fetchUserPosts(userName: string): Promise<PostType[]> {
   const userPostQuery = query(collection(firestore, "posts"), where("userName", "==", userName))
   const userPosts = await getDocs(userPostQuery)
@@ -102,4 +97,22 @@ export async function fetchUserPosts(userName: string): Promise<PostType[]> {
     }
   }))
   return userPostsData as PostType[]
+}
+
+export async function createUserPost({ uid, caption, files, userName }: NewPostData) {
+  const fileData = await Promise.all(files.map(async ({ file, type }) => {
+    const fileId = await createFile(file)
+
+    return {
+      fileId,
+      type,
+    }
+  }))
+
+  console.log({
+    uid,
+    caption,
+    files: fileData,
+    userName,
+  })
 }

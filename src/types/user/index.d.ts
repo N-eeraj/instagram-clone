@@ -22,3 +22,5 @@ export interface ProfileViewContextType {
 }
 
 export type DisplayPictureType = Pick<UserProfile, "userName" | "displayPicture">
+
+export type UpdateProfileArgs = Partial<Pick<UserProfile, "userName" | "fullName" | "bio">> & Pick<User, "uid">

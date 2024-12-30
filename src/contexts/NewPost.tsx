@@ -1,11 +1,15 @@
 import {
+  use,
   useState,
   createContext,
   type PropsWithChildren,
 } from "react"
 
 import { newPostSchema } from "@schemas/newPost"
+import { createUserPost } from "@firebaseApp/firestore"
+import { UserContext } from "@contexts/User"
 import { toast } from "sonner"
+
 import type {
   NewPostFile,
   NewPostContextType,
@@ -24,6 +28,12 @@ export const NewPostContext = createContext<NewPostContextType>({
 })
 
 function NewPostContextProvider({ children }: PropsWithChildren) {
+  const {
+    authUser,
+    userProfile,
+  } = use(UserContext)
+  if (!(authUser && userProfile)) return
+
   const [files, setFiles] = useState<NewPostFile[]>([])
   const [caption, setCaption] = useState("")
   const [previewFileIndex, setPreviewFileIndex] = useState(0)
@@ -33,7 +43,12 @@ function NewPostContextProvider({ children }: PropsWithChildren) {
     setLoading(true)
     try {
       newPostSchema.parse({ files, caption })
-      console.log("create post with", { files, caption })
+      await createUserPost({
+        uid: authUser.uid,
+        userName: userProfile.userName,
+        files,
+        caption,
+      })
     } catch(error) {
       if (error instanceof Object && "issues" in error && error.issues instanceof Array) {
         const { message } = error.issues.find(({ message }) => !!message)

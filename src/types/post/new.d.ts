@@ -1,9 +1,22 @@
 import type { MouseEventHandler } from "react"
-import { PostFile } from "@customTypes/post"
+import type {
+  PostFile,
+  PostMediaType,
+} from "@customTypes/post"
 
 export interface NewPostFile extends PostFile {
   file: File
   id: string | number
+}
+
+export interface NewPostData {
+  uid: string
+  userName: string
+  caption: string
+  files: Array<{
+    type: PostMediaType
+    file: File
+  }>
 }
 
 export interface NewPostContextType {

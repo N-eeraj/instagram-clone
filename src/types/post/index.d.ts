@@ -11,3 +11,13 @@ export interface PostType {
   caption: string
   id: string
 }
+
+export interface PostFileObject {
+  type: PostMediaType
+  fileId: string
+}
+
+export interface PostObjectType {
+  caption: string
+  posts: PostFileObject[]
+}

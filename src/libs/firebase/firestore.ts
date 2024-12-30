@@ -127,6 +127,7 @@ export async function fetchPostById(postId: string): Promise<PostType | void> {
   const { userName } = await fetchProfileByUid(postData.uid)
   postData.userName = userName
   postData.likes ??= []
+  postData.id = postId
   return postData as PostType
 }
 
@@ -154,8 +155,8 @@ export async function createUserPost({ uid, caption, files }: NewPostData) {
   })
 }
 
-export async function togglePostLike({ postId, liked, uid }: PostLikeToggle) {
-  const postRef = doc(firestore, "posts", postId)
+export async function togglePostLike({ id, liked, uid }: PostLikeToggle) {
+  const postRef = doc(firestore, "posts", id)
   await updateDoc(postRef, {
     likes: liked ? arrayRemove(uid) : arrayUnion(uid),
   })

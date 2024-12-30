@@ -29,7 +29,8 @@ function ProfilePostsGrid() {
             {file.hasMultiFiles && (
               <Icon
                 icon="mdi:checkbox-multiple-blank"
-                className="absolute top-1 right-1" />
+                fontSize={24}
+                className="absolute top-2 right-2" />
             )}
           </Link>
         </li>

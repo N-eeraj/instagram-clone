@@ -30,3 +30,9 @@ export interface PaginationProps {
   currentIndex: number
   onChange?: (_args: number) => void
 }
+
+export interface LikeProps {
+  liked: boolean
+  likes: number
+  onToggle: MouseEventHandler
+}

@@ -34,7 +34,7 @@ export interface PostObjectType {
 }
 
 export interface PostLikeToggle {
-  postId: string
+  id: string
   liked: boolean
   uid: string
 }

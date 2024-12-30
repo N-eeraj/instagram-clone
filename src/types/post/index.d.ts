@@ -12,6 +12,15 @@ export interface PostType {
   id: string
 }
 
+export interface PostListItemType {
+  caption: string;
+  file: {
+      type: PostMediaType;
+      url: string;
+  };
+  id: string;
+}
+
 export interface PostFileObject {
   type: PostMediaType
   fileId: string

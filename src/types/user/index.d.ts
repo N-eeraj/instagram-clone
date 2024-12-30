@@ -1,7 +1,7 @@
 import * as z from "zod"
 import { userProfileSchema } from "@schemas/user"
 import type { User } from "firebase/auth"
-import type { PostType } from "@customTypes/post"
+import type { PostListItemType } from "@customTypes/post"
 
 export type UserProfile = z.infer<typeof userProfileSchema> & {
   displayPicture?: string
@@ -18,7 +18,7 @@ export interface ProfileViewContextType {
   profileDetails: UserProfile | null
   isUserProfile: boolean
   isGuest: boolean
-  profilePosts: PostType[]
+  profilePosts: PostListItemType[]
   setProfileDetails: (_args: UserProfile | null) => void
 }
 

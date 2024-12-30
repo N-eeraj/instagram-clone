@@ -6,14 +6,16 @@ function ProfilePostsGrid() {
 
   return (
     <ul className="grid grid-cols-3">
-      {profilePosts.map(({ id, files }) => (
+      {profilePosts.map(({ id, file }) => (
         <li
           key={id}
           className="relative flex items-center aspect-square bg-black overflow-hidden">
-          {files[0].type === "photo" ?
+          {file.type === "photo" ?
             <img
-              src={files[0].url} /> :
-            <video src={files[0].url} />
+              src={file.url}
+              className="size-full object-contain" /> :
+            <video src={file.url}
+              className="size-full" />
           }
         </li>
       ))}

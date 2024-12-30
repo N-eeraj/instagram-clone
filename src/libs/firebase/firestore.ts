@@ -5,12 +5,14 @@ import {
   limit,
   setDoc,
   getDoc,
+  orderBy,
   getDocs,
   increment,
   updateDoc,
   collection,
   deleteField,
   getFirestore,
+  serverTimestamp,
 } from "firebase/firestore"
 import app from  "@firebaseApp/init"
 
@@ -21,8 +23,7 @@ import type {
   UpdateProfileArgs,
 } from "@customTypes/user"
 import type {
-  PostType,
-  PostFileObject,
+  PostListItemType,
   PostObjectType,
 } from "@customTypes/post"
 import type { NewPostData } from "@customTypes/post/new"
@@ -77,9 +78,9 @@ export async function updateUserProfile({ uid, ...profileData }: UpdateProfileAr
   await updateDoc(userRef, profileData)
 }
 
-export async function fetchUserPosts(userName: string): Promise<PostType[]> {
+export async function fetchUserPosts(userName: string): Promise<PostListItemType[]> {
   const profileDetails = await fetchProfileByUserName(userName)
-  const userPostQuery = query(collection(firestore, "posts"), where("uid", "==", profileDetails?.uid))
+  const userPostQuery = query(collection(firestore, "posts"), where("uid", "==", profileDetails?.uid), orderBy("createdAt", "desc"))
   const userPosts = await getDocs(userPostQuery)
   const userPostsData = await Promise.all(userPosts.docs.map(async (doc) => {
     const {
@@ -87,21 +88,22 @@ export async function fetchUserPosts(userName: string): Promise<PostType[]> {
       caption,
     } = doc.data() as PostObjectType
 
-    const files = await Promise.all(posts.map(async ({ type, fileId }: PostFileObject) => {
-      const url = await readFile(fileId)
-      return {
-        type,
-        url,
-      }
-    }))
+    const {
+      fileId,
+      type,
+    } = posts[0]
+    const url = await readFile(fileId)
 
     return {
       caption,
-      files,
+      file: {
+        type,
+        url,
+      },
       id: doc.id,
     }
   }))
-  return userPostsData as PostType[]
+  return userPostsData as PostListItemType[]
 }
 
 export async function createUserPost({ uid, caption, files }: NewPostData) {
@@ -119,6 +121,7 @@ export async function createUserPost({ uid, caption, files }: NewPostData) {
     uid,
     caption,
     posts: fileData,
+    createdAt: serverTimestamp(),
   })
 
   const userCollectionRef = doc(firestore, "users", uid)

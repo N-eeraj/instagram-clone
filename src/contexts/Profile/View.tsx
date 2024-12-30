@@ -18,7 +18,7 @@ import type {
   UserProfile,
   ProfileViewContextType,
 } from "@customTypes/user"
-import type { PostType } from "@customTypes/post"
+import type { PostListItemType } from "@customTypes/post"
 
 export const ProfileViewContext = createContext<ProfileViewContextType>({
   profileDetails: null,
@@ -30,7 +30,7 @@ export const ProfileViewContext = createContext<ProfileViewContextType>({
 
 function ProfileViewContextProvider({ children }: PropsWithChildren) {
   const [profileDetails, setProfileDetails] = useState<UserProfile | null>(null)
-  const [profilePosts, setProfilePosts] = useState<PostType[]>([])
+  const [profilePosts, setProfilePosts] = useState<PostListItemType[]>([])
   const { userName } = useParams()
   const navigate = useNavigate()
 

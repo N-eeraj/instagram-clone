@@ -10,7 +10,7 @@ import {
 
 import {
   isUsernameTaken,
-  addUserData,
+  createUser,
 } from "@firebaseApp/firestore"
 
 import {
@@ -50,7 +50,7 @@ export async function handleSignUp({ email, password, userName, fullName }: Regi
       }
     }
     const { user } = await createUserWithEmailAndPassword(auth, email, password)
-    addUserData({
+    createUser({
       userName,
       fullName,
       followers: 0,

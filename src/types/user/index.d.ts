@@ -5,6 +5,7 @@ import type { PostType } from "@customTypes/post"
 
 export type UserProfile = z.infer<typeof userProfileSchema> & {
   displayPicture?: string
+  uid?: string
 }
 
 export interface UserContextType {

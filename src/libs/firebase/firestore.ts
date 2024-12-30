@@ -6,6 +6,7 @@ import {
   setDoc,
   getDoc,
   getDocs,
+  increment,
   updateDoc,
   collection,
   deleteField,
@@ -34,7 +35,10 @@ export async function fetchProfileByUserName(userName: string): Promise<UserProf
   if (userDocs.empty) return null
   const profileData = userDocs.docs[0].data()
   const parsedData = userProfileSchema.parse(profileData)
-  return parsedData
+  return {
+    ...parsedData,
+    uid: userDocs.docs[0].id,
+  }
 }
 
 export async function isUsernameTaken(userName: string): Promise<boolean> {
@@ -42,7 +46,7 @@ export async function isUsernameTaken(userName: string): Promise<boolean> {
   return Boolean(profileData)
 }
 
-export async function addUserData(userData: UserProfile, uid: string) {
+export async function createUser(userData: UserProfile, uid: string) {
   const userCollectionRef = doc(collection(firestore, "users"), uid)
   await setDoc(userCollectionRef, userData)
 }
@@ -74,7 +78,8 @@ export async function updateUserProfile({ uid, ...profileData }: UpdateProfileAr
 }
 
 export async function fetchUserPosts(userName: string): Promise<PostType[]> {
-  const userPostQuery = query(collection(firestore, "posts"), where("userName", "==", userName))
+  const profileDetails = await fetchProfileByUserName(userName)
+  const userPostQuery = query(collection(firestore, "posts"), where("uid", "==", profileDetails?.uid))
   const userPosts = await getDocs(userPostQuery)
   const userPostsData = await Promise.all(userPosts.docs.map(async (doc) => {
     const {
@@ -99,7 +104,7 @@ export async function fetchUserPosts(userName: string): Promise<PostType[]> {
   return userPostsData as PostType[]
 }
 
-export async function createUserPost({ uid, caption, files, userName }: NewPostData) {
+export async function createUserPost({ uid, caption, files }: NewPostData) {
   const fileData = await Promise.all(files.map(async ({ file, type }) => {
     const fileId = await createFile(file)
 
@@ -109,10 +114,15 @@ export async function createUserPost({ uid, caption, files, userName }: NewPostD
     }
   }))
 
-  console.log({
+  const postsCollectionRef = doc(collection(firestore, "posts"))
+  await setDoc(postsCollectionRef, {
     uid,
     caption,
-    files: fileData,
-    userName,
+    posts: fileData,
+  })
+
+  const userCollectionRef = doc(firestore, "users", uid)
+  await updateDoc(userCollectionRef, {
+    posts: increment(1),
   })
 }

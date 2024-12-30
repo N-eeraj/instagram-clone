@@ -11,7 +11,6 @@ export interface NewPostFile extends PostFile {
 
 export interface NewPostData {
   uid: string
-  userName: string
   caption: string
   files: Array<{
     type: PostMediaType

@@ -4,6 +4,7 @@ import {
   createContext,
   type PropsWithChildren,
 } from "react"
+import { useNavigate } from "react-router"
 
 import { newPostSchema } from "@schemas/newPost"
 import { createUserPost } from "@firebaseApp/firestore"
@@ -39,16 +40,19 @@ function NewPostContextProvider({ children }: PropsWithChildren) {
   const [previewFileIndex, setPreviewFileIndex] = useState(0)
   const [loading, setLoading] = useState(false)
 
+  const navigate = useNavigate()
+
   const handleCreatePost = async () => {
     setLoading(true)
     try {
       newPostSchema.parse({ files, caption })
       await createUserPost({
         uid: authUser.uid,
-        userName: userProfile.userName,
         files,
         caption,
       })
+      navigate(`/${userProfile.userName}`)
+      toast.success("Post Created Successfully")
     } catch(error) {
       if (error instanceof Object && "issues" in error && error.issues instanceof Array) {
         const { message } = error.issues.find(({ message }) => !!message)

@@ -12,7 +12,10 @@ import {
 import type { PostType } from "@customTypes/post"
 
 export default function usePostView(id: string) {
-  const { authUser } = use(UserContext)
+  const {
+    authUser,
+    userProfile,
+  } = use(UserContext)
   if (!authUser) return {}
   const [loading, setLoading] = useState(false)
   const [post, setPost] = useState<PostType | null>(null)
@@ -55,10 +58,13 @@ export default function usePostView(id: string) {
     })
   }
 
+  const isOwnPost = post?.userName === userProfile?.userName
+
   return {
     post,
     liked,
     loading,
+    isOwnPost,
     handleLikeToggle,
   }
 }

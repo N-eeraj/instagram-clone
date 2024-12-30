@@ -34,6 +34,10 @@ const authRoutes = [
         path: ":userName/:postId",
         element: <Post />,
       },
+      {
+        path: ":userName/:postId/edit",
+        element: <>edit post</>,
+      },
     ],
   },
 ]

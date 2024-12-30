@@ -9,6 +9,7 @@ export interface ControlledSlider {
 export interface SliderProps extends ControlledSlider {
   mediaList: PostFile[]
   className?: string
+  onDoubleClick?: MouseEventHandler
 }
 
 export interface VideoPlayerProps {

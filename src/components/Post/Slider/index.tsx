@@ -6,7 +6,7 @@ import useSlider from "@hooks/postSlider/useSlider"
 import clsx from "clsx"
 import type { SliderProps } from "@customTypes/post/ui"
 
-function PostSlider({ mediaList, className, ...controlledProps }: SliderProps) {
+function PostSlider({ mediaList, className, onDoubleClick, ...controlledProps }: SliderProps) {
   const {
     emblaApi,
     emblaRef,
@@ -22,7 +22,9 @@ function PostSlider({ mediaList, className, ...controlledProps }: SliderProps) {
         "relative aspect-square bg-black overflow-hidden",
         "embla",
         className,
-    )}>
+        onDoubleClick && "cursor-pointer",
+      )}
+      onDoubleClick={onDoubleClick}>
       <ul className={clsx(
         "h-full items-center",
         "embla__container",

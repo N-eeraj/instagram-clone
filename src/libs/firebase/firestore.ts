@@ -10,6 +10,8 @@ import {
   increment,
   updateDoc,
   collection,
+  arrayUnion,
+  arrayRemove,
   deleteField,
   getFirestore,
   serverTimestamp,
@@ -26,6 +28,7 @@ import type {
   PostType,
   PostObjectType,
   PostFileObject,
+  PostLikeToggle,
   PostListItemType,
 } from "@customTypes/post"
 import type { NewPostData } from "@customTypes/post/new"
@@ -121,6 +124,9 @@ export async function fetchPostById(postId: string): Promise<PostType | void> {
       url,
     }
   }))
+  const { userName } = await fetchProfileByUid(postData.uid)
+  postData.userName = userName
+  postData.likes ??= []
   return postData as PostType
 }
 
@@ -145,5 +151,12 @@ export async function createUserPost({ uid, caption, files }: NewPostData) {
   const userCollectionRef = doc(firestore, "users", uid)
   await updateDoc(userCollectionRef, {
     posts: increment(1),
+  })
+}
+
+export async function togglePostLike({ postId, liked, uid }: PostLikeToggle) {
+  const postRef = doc(firestore, "posts", postId)
+  await updateDoc(postRef, {
+    likes: liked ? arrayRemove(uid) : arrayUnion(uid),
   })
 }

@@ -6,10 +6,11 @@ export interface PostFile {
 }
 
 export interface PostType {
+  id: string
   userName: string
   files: PostFile[]
   caption: string
-  id: string
+  likes: string[]
 }
 
 export interface PostListItemType {
@@ -30,4 +31,10 @@ export interface PostFileObject {
 export interface PostObjectType {
   caption: string
   files: PostFileObject[]
+}
+
+export interface PostLikeToggle {
+  postId: string
+  liked: boolean
+  uid: string
 }

@@ -7,7 +7,10 @@ export interface PostFile {
 
 export interface PostType {
   id: string
-  userName: string
+  user: {
+    userName: string
+    displayPicture?: string
+  }
   files: PostFile[]
   caption: string
   likes: string[]

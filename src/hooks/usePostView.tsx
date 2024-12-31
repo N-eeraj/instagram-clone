@@ -58,7 +58,7 @@ export default function usePostView(id: string) {
     })
   }
 
-  const isOwnPost = post?.userName === userProfile?.userName
+  const isOwnPost = post?.user.userName === userProfile?.userName
 
   return {
     post,

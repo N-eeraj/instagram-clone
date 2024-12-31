@@ -3,7 +3,7 @@ import { Link } from "react-router"
 import PostSlider from "@components/Post/Slider"
 import LoadingPost from "@components/Post/View/Loading"
 import Likes from "@components/Post/View/Likes"
-import PostOptions from "@components/Post/View//Options"
+import PostHeader from "@components/Post/View/Header"
 
 import usePostView from "@hooks/usePostView"
 import { Icon } from "@iconify/react"
@@ -25,7 +25,10 @@ function ViewPost({ id }: { id: string }) {
       {post && (
         <>
           <div className="relative">
-            {isOwnPost && <PostOptions id={post.id} />}
+            <PostHeader
+              id={post.id}
+              user={post.user}
+              updatable={isOwnPost} />
 
             <PostSlider
               mediaList={post.files}
@@ -35,10 +38,7 @@ function ViewPost({ id }: { id: string }) {
               <Icon
                 icon="mdi:checkbox-multiple-blank"
                 fontSize={24}
-                className={clsx(
-                  "absolute right-2",
-                  isOwnPost ? "top-12" : "top-2"
-                )} />
+                className="absolute top-12 right-2" />
             )}
           </div>
 
@@ -48,9 +48,9 @@ function ViewPost({ id }: { id: string }) {
             onToggle={handleLikeToggle} />
 
           <p>
-            <Link to={`/${post.userName}`}>
+            <Link to={`/${post.user.userName}`}>
               <strong className="text-white font-bold">
-                {post.userName}
+                {post.user.userName}
               </strong>
             </Link>
             &nbsp;&nbsp;

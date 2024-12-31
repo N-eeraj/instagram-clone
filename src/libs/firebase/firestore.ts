@@ -124,8 +124,18 @@ export async function fetchPostById(postId: string): Promise<PostType | void> {
       url,
     }
   }))
-  const { userName } = await fetchProfileByUid(postData.uid)
-  postData.userName = userName
+  const {
+    userName,
+    profilePicture: fileId,
+  } = await fetchProfileByUid(postData.uid)
+  let displayPicture
+  if (fileId) {
+    displayPicture = await readFile(fileId)
+  }
+  postData.user = {
+    userName,
+    displayPicture,
+  }
   postData.likes ??= []
   postData.id = postId
   return postData as PostType

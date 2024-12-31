@@ -4,6 +4,7 @@ import type {
 } from "@storybook/react"
 
 import Modal from "./index"
+import { fn } from "@storybook/test"
 
 const meta: Meta<typeof Modal> = {
   title: "UI/Modal",
@@ -24,4 +25,18 @@ type Story = StoryObj<typeof Modal>
 
 export const Primary: Story = {
   args: {},
+}
+
+export const Dismissible: Story = {
+  args: {
+    dismissible: true,
+    onClose: fn()
+  },
+}
+
+export const StyledTitle: Story = {
+  args: {
+    title: "This is a custom title",
+    titleClassName: "text-green-500",
+  },
 }

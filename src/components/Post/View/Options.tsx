@@ -1,15 +1,27 @@
 import { useState } from "react"
 import { Link } from "react-router"
+
+import Button from "@components/ui/Button"
 import Modal from "@components/ui/Modal"
 import { Icon } from "@iconify/react"
 
 function PostOptions({ id }: { id: string }) {
   const [showOptions, setShowOptions] = useState(false)
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+  const [loadingDelete, setLoadingDelete] = useState(false)
 
   const confirmDelete = async () => {
     setShowOptions(false)
     setShowDeleteConfirmation(true)
+  }
+
+  const handleDeletePost = async () => {
+    setLoadingDelete(true)
+    try {
+
+    } finally {
+      setLoadingDelete(false)
+    }
   }
 
   return (
@@ -25,11 +37,12 @@ function PostOptions({ id }: { id: string }) {
           <div
             className="fixed top-0 left-0 size-full z-10"
             onClick={() => setShowOptions(false)} />
-          <ul className="absolute top-full right-0 min-w-32 bg-secondary rounded shadow-sm shadow-separator-dark z-10">
+          <ul className="absolute top-full right-0 min-w-32 bg-secondary rounded divide-y divide-separator-dark shadow-sm shadow-separator-dark z-10">
             <li>
               <Link
                 to="edit"
-                className="flex justify-end items-center w-full px-1 py-2 hover:bg-black/50 duration-200">
+                className="flex justify-between items-center w-full px-4 py-2 hover:bg-black/50 hover:text-primary-button duration-200">
+                <Icon icon="material-symbols:edit-outline" />
                 <span>
                   Edit
                 </span>
@@ -37,8 +50,9 @@ function PostOptions({ id }: { id: string }) {
             </li>
             <li>
               <button
-                className="flex justify-end items-center w-full px-1 py-2 hover:bg-black/50 duration-200"
+                className="flex justify-between items-center w-full px-4 py-2 hover:bg-black/50 text-red-500 duration-200"
                 onClick={confirmDelete}>
+                <Icon icon="material-symbols:delete-outline" />
                 <span>
                   Delete
                 </span>
@@ -51,9 +65,30 @@ function PostOptions({ id }: { id: string }) {
 
       <Modal
         show={showDeleteConfirmation}
-        title="Are you sure to delete this post"
-        dismissible
-        onClose={() => setShowDeleteConfirmation(false)}>
+        title="Confirm Deletion"
+        titleClassName="text-red-500 font-medium">
+        <div>
+          <p className="text-center">
+            You are about to delete this post.
+          </p>
+          <p className="text-center">
+            Are you sure you want to continue?
+          </p>
+          <div className="flex gap-x-4 mt-4">
+            <Button
+              disabled={loadingDelete}
+              className="flex-1 bg-white/10 hover:bg-white/20"
+              onClick={() => setShowDeleteConfirmation(false)}>
+              Cancel
+            </Button>
+            <Button
+              loading={loadingDelete}
+              className="flex-1 bg-red-500 hover:bg-red-600"
+              onClick={handleDeletePost}>
+              Delete
+            </Button>
+          </div>
+        </div>
       </Modal>
     </div>
   )

@@ -171,3 +171,8 @@ export async function togglePostLike({ id, liked, uid }: PostLikeToggle) {
     likes: liked ? arrayRemove(uid) : arrayUnion(uid),
   })
 }
+
+export async function updatePost(id: string, caption: string) {
+  const postRef = doc(firestore, "posts", id)
+  await updateDoc(postRef, { caption })
+}

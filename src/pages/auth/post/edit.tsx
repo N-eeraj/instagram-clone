@@ -1,41 +1,18 @@
-import {
-  useState,
-  useEffect,
-} from "react"
-import {
-  useParams,
-  useNavigate,
-} from "react-router"
-
 import ActionHeader from "@components/ui/ActionHeader"
 import PostSlider from "@components/Post/Slider"
 import Textarea from "@components/ui/Textarea"
-import usePostFetch from "@hooks/useFetchPost"
+import usePostUpdate from "@hooks/usePostUpdate"
 
 function EditPost() {
-  const { postId } = useParams()
-  if (!postId) return
-
-  const navigate = useNavigate()
-
   const {
     post,
+    goBack,
+    caption,
     loading,
-  } = usePostFetch(postId)
-
-  const [caption, setCaption] = useState("")
-
-  useEffect(() => {
-    setCaption(post?.caption ?? "")
-  }, [post])
-
-  const handleUpdate = async () => {
-    console.log(caption)
-  }
-
-  const goBack = () => {
-    navigate(-1)
-  }
+    setCaption,
+    deleteLoading,
+    handleUpdate,
+  } = usePostUpdate()
 
   if (loading) {
     return (
@@ -55,9 +32,11 @@ function EditPost() {
           title="Update Caption"
           action={{
             text: "Update",
+            loading: deleteLoading,
             onClick: handleUpdate,
           }}
           canceled={{
+            disabled: deleteLoading,
             onClick: goBack,
           }}
           className="md:col-span-2" />

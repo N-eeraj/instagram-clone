@@ -36,6 +36,7 @@ import type {
   PostListItemType,
 } from "@customTypes/post"
 import type { NewPostData } from "@customTypes/post/new"
+import { FollowUserArgs } from "@customTypes/follow"
 
 const firestore = getFirestore(app)
 
@@ -59,6 +60,11 @@ export async function isUsernameTaken(userName: string): Promise<boolean> {
 export async function createUser(userData: UserProfile, uid: string) {
   const userCollectionRef = doc(collection(firestore, "users"), uid)
   await setDoc(userCollectionRef, userData)
+  const userFollowsCollectionRef = doc(collection(firestore, "userFollows"), uid)
+  await setDoc(userFollowsCollectionRef, {
+    following: [],
+    followers: [],
+  })
 }
 
 export async function fetchProfileByUid(uid: string): Promise<UserProfile> {
@@ -187,4 +193,29 @@ export async function deleteUserPost(postId: string, uid: string) {
 export async function updatePost(id: string, caption: string) {
   const postRef = doc(firestore, "posts", id)
   await updateDoc(postRef, { caption })
+}
+
+export async function followUser({ userName, uid }: FollowUserArgs) {
+  const userProfile = await fetchProfileByUserName(userName)
+  if (userProfile?.uid) {
+    const followingUserRef = doc(firestore, "users", uid)
+    const followerUserRef = doc(firestore, "users", userProfile.uid)
+    const followingDocRef = doc(firestore, "userFollows", uid)
+    const followerDocRef = doc(firestore, "userFollows", userProfile.uid)
+
+    await Promise.all([
+      updateDoc(followingUserRef, {
+        following: increment(1),
+      }),
+      updateDoc(followerUserRef, {
+        followers: increment(1),
+      }),
+      updateDoc(followingDocRef, {
+        following: arrayUnion(userProfile.uid),
+      }),
+      updateDoc(followerDocRef, {
+        followers: arrayUnion(uid),
+      }),
+    ])
+  }
 }

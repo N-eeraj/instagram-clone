@@ -39,7 +39,7 @@ import type {
   PostListItemType,
 } from "@customTypes/post"
 import type { NewPostData } from "@customTypes/post/new"
-import { FollowUserArgs } from "@customTypes/follow"
+import { FollowToggleArgs } from "@customTypes/follow"
 
 const firestore = getFirestore(app)
 
@@ -205,7 +205,7 @@ export async function fetchFollowings(uid: string) {
   return parsedData
 }
 
-export async function followUser({ userName, uid }: FollowUserArgs) {
+export async function toggleFollowUser({ uid, userName, isNewFollow }: FollowToggleArgs) {
   const userProfile = await fetchProfileByUserName(userName)
   if (userProfile?.uid) {
     const followingUserRef = doc(firestore, "users", uid)
@@ -215,41 +215,16 @@ export async function followUser({ userName, uid }: FollowUserArgs) {
 
     await Promise.all([
       updateDoc(followingUserRef, {
-        following: increment(1),
+        following: increment(isNewFollow ? 1: -1),
       }),
       updateDoc(followerUserRef, {
-        followers: increment(1),
+        followers: increment(isNewFollow ? 1: -1),
       }),
       updateDoc(followingDocRef, {
-        following: arrayUnion(userProfile.uid),
+        following: isNewFollow ? arrayUnion(userProfile.uid) : arrayRemove(userProfile.uid),
       }),
       updateDoc(followerDocRef, {
-        followers: arrayUnion(uid),
-      }),
-    ])
-  }
-}
-
-export async function unFollowUser({ userName, uid }: FollowUserArgs) {
-  const userProfile = await fetchProfileByUserName(userName)
-  if (userProfile?.uid) {
-    const followingUserRef = doc(firestore, "users", uid)
-    const followerUserRef = doc(firestore, "users", userProfile.uid)
-    const followingDocRef = doc(firestore, "userFollows", uid)
-    const followerDocRef = doc(firestore, "userFollows", userProfile.uid)
-
-    await Promise.all([
-      updateDoc(followingUserRef, {
-        following: increment(-1),
-      }),
-      updateDoc(followerUserRef, {
-        followers: increment(-1),
-      }),
-      updateDoc(followingDocRef, {
-        following: arrayRemove(userProfile.uid),
-      }),
-      updateDoc(followerDocRef, {
-        followers: arrayRemove(uid),
+        followers: isNewFollow ? arrayUnion(uid) : arrayRemove(uid),
       }),
     ])
   }

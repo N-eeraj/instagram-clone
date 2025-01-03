@@ -1,4 +1,5 @@
-export interface FollowUserArgs {
-  userName: string
+export interface FollowToggleArgs {
   uid: string
+  userName: string
+  isNewFollow: boolean
 }

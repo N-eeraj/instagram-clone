@@ -7,7 +7,6 @@ import PostHeader from "@components/Post/View/Header"
 
 import usePostView from "@hooks/usePostView"
 import { Icon } from "@iconify/react"
-import clsx from "clsx"
 
 function ViewPost({ id }: { id: string }) {
   const {

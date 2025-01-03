@@ -9,6 +9,16 @@ function ProfilePostsGrid() {
     profilePosts,
   } = use(ProfileViewContext)
 
+  if (!profilePosts.length) {
+    return (
+      <>
+        <span className="block w-full mt-4 text-xl text-center opacity-75">
+          No Posts
+        </span>
+      </>
+    )
+  }
+
   return (
     <ul className="grid grid-cols-3">
       {profilePosts.map(({ id, file }) => (

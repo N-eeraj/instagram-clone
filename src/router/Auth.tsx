@@ -2,8 +2,9 @@ import AuthLayout from "@layouts/Auth"
 
 import Home from "@pages/auth/home"
 import UpdateProfile from "@pages/auth/update-profile"
-import NewPost from "@pages/auth/new-post.tsx"
-import Post from "@pages/auth/post"
+import Post from "@pages/auth/post/index"
+import NewPost from "@pages/auth/post/new.tsx"
+import EditPost from "@pages/auth/post/edit.tsx"
 
 const authRoutes = [
   {
@@ -36,7 +37,7 @@ const authRoutes = [
       },
       {
         path: ":userName/:postId/edit",
-        element: <>edit post</>,
+        element: <EditPost />,
       },
     ],
   },

@@ -1,15 +1,7 @@
-import {
-  use,
-  useState,
-  useEffect,
-} from "react"
+import { use } from "react"
 import { UserContext } from "@contexts/User"
-
-import {
-  fetchPostById,
-  togglePostLike,
-} from "@firebaseApp/firestore"
-import type { PostType } from "@customTypes/post"
+import usePostFetch from "@hooks/useFetchPost"
+import { togglePostLike } from "@firebaseApp/firestore"
 
 export default function usePostView(id: string) {
   const {
@@ -17,22 +9,12 @@ export default function usePostView(id: string) {
     userProfile,
   } = use(UserContext)
   if (!authUser) return {}
-  const [loading, setLoading] = useState(false)
-  const [post, setPost] = useState<PostType | null>(null)
 
-  const fetchPostData = async () => {
-    setLoading(true)
-    const post = await fetchPostById(id)
-  if (post) {
-      setPost(post)
-    }
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    fetchPostData()
-  }, [])
-
+  const {
+    post,
+    loading,
+    setPost,
+  } = usePostFetch(id)
 
   const liked = post?.likes.includes(authUser.uid) ?? false
 

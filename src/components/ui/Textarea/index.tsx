@@ -6,11 +6,15 @@ import clsx from "clsx"
 interface TextareaProps extends ComponentProps<"textarea"> {
   errors?: FieldError
   filled?: boolean
+  containerClassName?: string
 }
 
-function Textarea({ errors, filled, className, ...props }: TextareaProps) {
+function Textarea({ errors, filled, className, containerClassName, ...props }: TextareaProps) {
   return (
-    <div className="flex flex-col gap-y-1">
+    <div className={clsx(
+      "flex flex-col gap-y-1",
+      containerClassName,
+      )}>
       <textarea
         {...props}
         className={clsx(

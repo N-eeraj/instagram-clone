@@ -23,7 +23,10 @@ import {
   readFile,
   createFile,
 } from "@appwriteApp/storage"
-import { userProfileSchema } from "@schemas/user"
+import {
+  userProfileSchema,
+  userFollowsSchema,
+} from "@schemas/user"
 import type {
   UserProfile,
   UpdateProfileArgs,
@@ -195,6 +198,13 @@ export async function updatePost(id: string, caption: string) {
   await updateDoc(postRef, { caption })
 }
 
+export async function fetchFollowings(uid: string) {
+  const userFollowsDocRef = doc(collection(firestore, "userFollows"), uid)
+  const userFollowsDoc = await getDoc(userFollowsDocRef)
+  const parsedData = userFollowsSchema.parse(userFollowsDoc.data())
+  return parsedData
+}
+
 export async function followUser({ userName, uid }: FollowUserArgs) {
   const userProfile = await fetchProfileByUserName(userName)
   if (userProfile?.uid) {
@@ -215,6 +225,31 @@ export async function followUser({ userName, uid }: FollowUserArgs) {
       }),
       updateDoc(followerDocRef, {
         followers: arrayUnion(uid),
+      }),
+    ])
+  }
+}
+
+export async function unFollowUser({ userName, uid }: FollowUserArgs) {
+  const userProfile = await fetchProfileByUserName(userName)
+  if (userProfile?.uid) {
+    const followingUserRef = doc(firestore, "users", uid)
+    const followerUserRef = doc(firestore, "users", userProfile.uid)
+    const followingDocRef = doc(firestore, "userFollows", uid)
+    const followerDocRef = doc(firestore, "userFollows", userProfile.uid)
+
+    await Promise.all([
+      updateDoc(followingUserRef, {
+        following: increment(-1),
+      }),
+      updateDoc(followerUserRef, {
+        followers: increment(-1),
+      }),
+      updateDoc(followingDocRef, {
+        following: arrayRemove(userProfile.uid),
+      }),
+      updateDoc(followerDocRef, {
+        followers: arrayRemove(uid),
       }),
     ])
   }

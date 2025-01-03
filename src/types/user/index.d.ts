@@ -1,5 +1,8 @@
 import * as z from "zod"
-import { userProfileSchema } from "@schemas/user"
+import {
+  userProfileSchema,
+  userFollowsSchema,
+} from "@schemas/user"
 import type { User } from "firebase/auth"
 import type { PostListItemType } from "@customTypes/post"
 
@@ -8,10 +11,14 @@ export type UserProfile = z.infer<typeof userProfileSchema> & {
   uid?: string
 }
 
+export type UserFollowsType = z.infer<typeof userFollowsSchema>
+
 export interface UserContextType {
   authUser: User | null
   userProfile: UserProfile | null
+  userFollows: UserFollowsType
   setUserProfile: (_args: UserProfile | null) => void
+  setUserFollows: (_args: UserFollowsType) => void
 }
 
 export interface ProfileViewContextType {

@@ -9,3 +9,8 @@ export const userProfileSchema = z.object({
   profilePicture: z.string().optional(),
   bio: z.string().optional(),
 })
+
+export const userFollowsSchema = z.object({
+  following: z.array(z.string()),
+  followers: z.array(z.string()),
+})

@@ -1,9 +1,18 @@
-import { useState } from "react"
-import { Link } from "react-router"
+import {
+  use,
+  useState,
+} from "react"
+import {
+  Link,
+  useNavigate,
+} from "react-router"
 
 import DisplayPicture from "@components/DisplayPicture"
 import Button from "@components/ui/Button"
 import Modal from "@components/ui/Modal"
+import { UserContext } from "@contexts/User"
+
+import { deleteUserPost } from "@firebaseApp/firestore"
 import { Icon } from "@iconify/react"
 import type { PostType } from "@customTypes/post"
 
@@ -15,6 +24,11 @@ function PostHeader({ id, user, updatable }: {
   const [showOptions, setShowOptions] = useState(false)
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
   const [loadingDelete, setLoadingDelete] = useState(false)
+  const {
+    authUser,
+    userProfile,
+  } = use(UserContext)
+  const navigate = useNavigate()
 
   const confirmDelete = async () => {
     setShowOptions(false)
@@ -22,9 +36,11 @@ function PostHeader({ id, user, updatable }: {
   }
 
   const handleDeletePost = async () => {
+    if (!authUser?.uid) return
     setLoadingDelete(true)
     try {
-
+      await deleteUserPost(id, authUser.uid)
+      navigate(`/${userProfile?.userName}`)
     } finally {
       setLoadingDelete(false)
     }

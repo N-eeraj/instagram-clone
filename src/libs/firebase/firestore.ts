@@ -9,6 +9,7 @@ import {
   getDocs,
   increment,
   updateDoc,
+  deleteDoc,
   collection,
   arrayUnion,
   arrayRemove,
@@ -18,7 +19,10 @@ import {
 } from "firebase/firestore"
 import app from  "@firebaseApp/init"
 
-import { createFile, readFile } from "@appwriteApp/storage"
+import {
+  readFile,
+  createFile,
+} from "@appwriteApp/storage"
 import { userProfileSchema } from "@schemas/user"
 import type {
   UserProfile,
@@ -169,6 +173,14 @@ export async function togglePostLike({ id, liked, uid }: PostLikeToggle) {
   const postRef = doc(firestore, "posts", id)
   await updateDoc(postRef, {
     likes: liked ? arrayRemove(uid) : arrayUnion(uid),
+  })
+}
+
+export async function deleteUserPost(postId: string, uid: string) {
+  await deleteDoc(doc(firestore, "posts", postId))
+  const userCollectionRef = doc(firestore, "users", uid)
+  await updateDoc(userCollectionRef, {
+    posts: increment(-1),
   })
 }
 

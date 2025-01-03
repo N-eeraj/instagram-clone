@@ -1,7 +1,7 @@
 import ActionHeader from "@components/ui/ActionHeader"
 import PostSlider from "@components/Post/Slider"
 import Textarea from "@components/ui/Textarea"
-import usePostUpdate from "@hooks/usePostUpdate"
+import usePostUpdate from "@hooks/post/usePostUpdate"
 
 function EditPost() {
   const {

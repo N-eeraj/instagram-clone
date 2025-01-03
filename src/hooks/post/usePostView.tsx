@@ -1,6 +1,6 @@
 import { use } from "react"
 import { UserContext } from "@contexts/User"
-import usePostFetch from "@hooks/useFetchPost"
+import usePostFetch from "@hooks/post/useFetchPost"
 import { togglePostLike } from "@firebaseApp/firestore"
 
 export default function usePostView(id: string) {

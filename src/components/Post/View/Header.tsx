@@ -1,50 +1,23 @@
-import {
-  use,
-  useState,
-} from "react"
-import {
-  Link,
-  useNavigate,
-} from "react-router"
+import { Link } from "react-router"
 
 import DisplayPicture from "@components/DisplayPicture"
 import Button from "@components/ui/Button"
 import Modal from "@components/ui/Modal"
-import { UserContext } from "@contexts/User"
 
-import { deleteUserPost } from "@firebaseApp/firestore"
 import { Icon } from "@iconify/react"
-import type { PostType } from "@customTypes/post"
+import useDeletePost from "@hooks/post/useDeletePost"
+import type { PostHeaderProps } from "@/types/post/ui"
 
-function PostHeader({ id, user, updatable }: {
-  id: string
-  user: PostType["user"]
-  updatable: boolean
-}) {
-  const [showOptions, setShowOptions] = useState(false)
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
-  const [loadingDelete, setLoadingDelete] = useState(false)
+function PostHeader({ id, user, updatable }: PostHeaderProps) {
   const {
-    authUser,
-    userProfile,
-  } = use(UserContext)
-  const navigate = useNavigate()
-
-  const confirmDelete = async () => {
-    setShowOptions(false)
-    setShowDeleteConfirmation(true)
-  }
-
-  const handleDeletePost = async () => {
-    if (!authUser?.uid) return
-    setLoadingDelete(true)
-    try {
-      await deleteUserPost(id, authUser.uid)
-      navigate(`/${userProfile?.userName}`)
-    } finally {
-      setLoadingDelete(false)
-    }
-  }
+    showOptions,
+    loadingDelete,
+    confirmDelete,
+    setShowOptions,
+    handleDeletePost,
+    showDeleteConfirmation,
+    setShowDeleteConfirmation,
+  } = useDeletePost(id)
 
   return (
     <div className="relative flex justify-between items-center h-10 p-2 bg-white/5">

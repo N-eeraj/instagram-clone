@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react"
-import useVideoPlayer from "@hooks/postSlider/useVideoPlayer"
+import useVideoPlayer from "@hooks/post/postSlider/useVideoPlayer"
 import type { VideoPlayerProps } from "@customTypes/post/ui"
 
 function VideoPlayer({ url, ...props }: VideoPlayerProps) {

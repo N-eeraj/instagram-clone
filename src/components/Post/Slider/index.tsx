@@ -2,7 +2,7 @@ import ArrowButtons from "@components/Post/Slider/ArrowButtons"
 import Pagination from "@components/Post/Slider/Pagination"
 import VideoPlayer from "@components/Post/Slider/VideoPlayer"
 
-import useSlider from "@hooks/postSlider/useSlider"
+import useSlider from "@hooks/post/postSlider/useSlider"
 import clsx from "clsx"
 import type { SliderProps } from "@customTypes/post/ui"
 

@@ -5,7 +5,7 @@ import LoadingPost from "@components/Post/View/Loading"
 import Likes from "@components/Post/View/Likes"
 import PostHeader from "@components/Post/View/Header"
 
-import usePostView from "@hooks/usePostView"
+import usePostView from "@hooks/post/usePostView"
 import { Icon } from "@iconify/react"
 
 function ViewPost({ id }: { id: string }) {

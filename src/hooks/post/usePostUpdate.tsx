@@ -7,7 +7,7 @@ import {
   useNavigate,
 } from "react-router"
 
-import usePostFetch from "@hooks/useFetchPost"
+import usePostFetch from "@hooks/post/useFetchPost"
 import { updatePost } from "@firebaseApp/firestore"
 
 export default function usePostUpdate() {

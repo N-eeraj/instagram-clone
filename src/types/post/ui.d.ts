@@ -1,5 +1,9 @@
 import type { MouseEventHandler } from "react"
-import type { PostFile } from "@customTypes/post"
+import type {
+  PostFile,
+  PostType,
+} from "@customTypes/post"
+
 
 export interface ControlledSlider {
   currentIndex?: number
@@ -35,4 +39,10 @@ export interface LikeProps {
   liked: boolean
   likes: number
   onToggle: MouseEventHandler
+}
+
+export interface PostHeaderProps {
+  id: string
+  user: PostType["user"]
+  updatable: boolean
 }
